@@ -1,0 +1,8 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    phpVersion: 70400
+    paths:
+        - cookie-consent-cmp.php
+        - src/
+    level: 5

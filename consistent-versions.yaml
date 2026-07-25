@@ -1,0 +1,33 @@
+checks:
+  plugin-version:
+    normalize: version
+    expected:
+      reader: wordpress-plugin
+      file: cookie-consent-cmp.php
+      path: $.Version
+    values:
+      translation-template:
+        reader: gettext
+        file: languages/cookie-consent-cmp.pot
+        path: $.project.version
+      release-tag:
+        reader: env
+        variable: RELEASE_TAG
+        normalize: trim-v-prefix
+
+  minimum-php:
+    normalize: version
+    expected:
+      reader: composer
+      file: composer.json
+      path: $.require.php
+      normalize: composer-minimum
+    values:
+      plugin-header:
+        reader: wordpress-plugin
+        file: cookie-consent-cmp.php
+        path: $['Requires PHP']
+      github-actions:
+        reader: yaml
+        file: .github/workflows/release.yml
+        path: $.jobs.plugin_zip.steps[0].with['php-version']

@@ -1,0 +1,314 @@
+# Copyright (C) 2026 Viktor Szépe
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Cookie Consent CMP 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-25T13:32:20+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: cookie-consent-cmp\n"
+
+#. Plugin Name of the plugin
+#: cookie-consent-cmp.php
+#: src/AdminPage.php:55
+#: src/AdminPage.php:56
+#: src/AdminPage.php:143
+msgid "Cookie Consent CMP"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: cookie-consent-cmp.php
+msgid "https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress"
+msgstr ""
+
+#. Description of the plugin
+#: cookie-consent-cmp.php
+msgid "Klaro-based cookie consent banner with WP Consent API compatibility."
+msgstr ""
+
+#. Author of the plugin
+#: cookie-consent-cmp.php
+msgid "Viktor Szépe"
+msgstr ""
+
+#. Author URI of the plugin
+#: cookie-consent-cmp.php
+msgid "https://github.com/szepeviktor"
+msgstr ""
+
+#: src/AdminPage.php:77
+msgid "Banner copy"
+msgstr ""
+
+#: src/AdminPage.php:83
+msgid "Display"
+msgstr ""
+
+#: src/AdminPage.php:89
+msgid "Integrations"
+msgstr ""
+
+#: src/AdminPage.php:94
+msgid "Notice title"
+msgstr ""
+
+#: src/AdminPage.php:95
+msgid "Notice description"
+msgstr ""
+
+#: src/AdminPage.php:96
+msgid "Modal title"
+msgstr ""
+
+#: src/AdminPage.php:97
+msgid "Modal description"
+msgstr ""
+
+#: src/AdminPage.php:100
+msgid "Modal style"
+msgstr ""
+
+#: src/AdminPage.php:105
+msgid "Google Tag Manager ID"
+msgstr ""
+
+#: src/AdminPage.php:106
+msgid "Microsoft Clarity project ID"
+msgstr ""
+
+#: src/AdminPage.php:107
+msgid "Hotjar site ID"
+msgstr ""
+
+#: src/AdminPage.php:108
+msgid "Hotjar script version"
+msgstr ""
+
+#: src/AdminPage.php:109
+msgid "Meta Pixel ID"
+msgstr ""
+
+#: src/AdminPage.php:110
+msgid "LinkedIn partner ID"
+msgstr ""
+
+#: src/AdminPage.php:113
+msgid "YouTube blocking"
+msgstr ""
+
+#: src/AdminPage.php:119
+msgid "Block and replace YouTube embeds until marketing consent is granted."
+msgstr ""
+
+#: src/AdminPage.php:124
+msgid "Floating privacy button"
+msgstr ""
+
+#: src/AdminPage.php:130
+msgid "Show a floating button that reopens the privacy settings."
+msgstr ""
+
+#: src/AdminPage.php:144
+msgid "Configure the consent texts and vendor IDs used by the frontend Klaro banner."
+msgstr ""
+
+#: src/AdminPage.php:148
+msgid "WP Consent API was not detected. The CMP will still render, but the WordPress compatibility bridge will stay inactive until the API plugin is available."
+msgstr ""
+
+#: src/AdminPage.php:165
+msgid "Set the text displayed in the consent notice and preferences dialog."
+msgstr ""
+
+#: src/AdminPage.php:170
+msgid "Enter only the services that this site uses."
+msgstr ""
+
+#: src/AdminPage.php:175
+msgid "Control how visitors can access their privacy settings."
+msgstr ""
+
+#: src/AdminPage.php:233
+msgid "Klaro’s default"
+msgstr ""
+
+#: src/AdminPage.php:234
+msgid "Viktor’s default"
+msgstr ""
+
+#: src/AdminPage.php:235
+msgid "Light"
+msgstr ""
+
+#: src/AdminPage.php:236
+msgid "Dark"
+msgstr ""
+
+#: src/AdminPage.php:237
+msgid "Twenty Twenty-Five"
+msgstr ""
+
+#: src/AdminPage.php:258
+msgid "Klaro’s default applies no custom modal theme; the component stylesheet only positions and styles plugin controls."
+msgstr ""
+
+#: src/Frontend/Assets.php:184
+msgid "Functional"
+msgstr ""
+
+#: src/Frontend/Assets.php:185
+msgid "Statistics"
+msgstr ""
+
+#: src/Frontend/Assets.php:186
+msgid "Marketing"
+msgstr ""
+
+#: src/Frontend/Assets.php:189
+msgid "service"
+msgstr ""
+
+#: src/Frontend/Assets.php:190
+msgid "services"
+msgstr ""
+
+#: src/Frontend/Assets.php:192
+msgid "OK"
+msgstr ""
+
+#: src/Frontend/Assets.php:193
+msgid "Save"
+msgstr ""
+
+#: src/Frontend/Assets.php:194
+msgid "Accept all"
+msgstr ""
+
+#: src/Frontend/Assets.php:195
+msgid "Decline all"
+msgstr ""
+
+#: src/Frontend/Assets.php:196
+msgid "Decline"
+msgstr ""
+
+#: src/Frontend/Assets.php:197
+msgid "Close"
+msgstr ""
+
+#: src/Frontend/Assets.php:200
+msgid "Enable or disable all services"
+msgstr ""
+
+#: src/Frontend/Assets.php:201
+msgid "Use this switch to change all optional services at once."
+msgstr ""
+
+#: src/Frontend/Assets.php:204
+msgid "(opt-out)"
+msgstr ""
+
+#: src/Frontend/Assets.php:205
+msgid "This service loads by default, but can be disabled later."
+msgstr ""
+
+#: src/Frontend/Assets.php:208
+msgid "(required)"
+msgstr ""
+
+#: src/Frontend/Assets.php:209
+msgid "This service is required for the site to function."
+msgstr ""
+
+#: src/Frontend/Assets.php:211
+msgid "Purposes"
+msgstr ""
+
+#: src/Frontend/Assets.php:212
+msgid "Purpose"
+msgstr ""
+
+#: src/Frontend/Assets.php:229
+#: src/Frontend/Assets.php:238
+msgid "Cookie consent settings"
+msgstr ""
+
+#: src/Frontend/Assets.php:239
+msgid "Stores the visitor’s consent choice."
+msgstr ""
+
+#: src/Frontend/Assets.php:248
+#: src/Frontend/Assets.php:262
+msgid "Google Tag Manager"
+msgstr ""
+
+#: src/Frontend/Assets.php:263
+msgid "Loads analytics tags managed through Google Tag Manager."
+msgstr ""
+
+#: src/Frontend/Assets.php:272
+#: src/Frontend/Assets.php:284
+msgid "Microsoft Clarity"
+msgstr ""
+
+#: src/Frontend/Assets.php:285
+msgid "Measures how visitors use the site through session analytics."
+msgstr ""
+
+#: src/Frontend/Assets.php:294
+#: src/Frontend/Assets.php:318
+msgid "Hotjar"
+msgstr ""
+
+#: src/Frontend/Assets.php:319
+msgid "Measures visitor behavior and collects usability feedback."
+msgstr ""
+
+#: src/Frontend/Assets.php:328
+#: src/Frontend/Assets.php:340
+msgid "Meta Pixel"
+msgstr ""
+
+#: src/Frontend/Assets.php:341
+msgid "Measures advertising performance and visitor actions for Meta."
+msgstr ""
+
+#: src/Frontend/Assets.php:350
+#: src/Frontend/Assets.php:362
+msgid "LinkedIn Insight Tag"
+msgstr ""
+
+#: src/Frontend/Assets.php:363
+msgid "Measures LinkedIn campaign performance and website conversions."
+msgstr ""
+
+#: src/Frontend/Assets.php:372
+#: src/Frontend/Assets.php:386
+msgid "YouTube"
+msgstr ""
+
+#: src/Frontend/Assets.php:387
+msgid "Loads embedded videos provided by YouTube."
+msgstr ""
+
+#: src/Options.php:44
+msgid "Privacy settings"
+msgstr ""
+
+#: src/Options.php:45
+msgid "We use cookies for required functionality, statistics, and marketing. You can update your choices at any time."
+msgstr ""
+
+#: src/Options.php:46
+msgid "Privacy preferences"
+msgstr ""
+
+#: src/Options.php:47
+msgid "Choose which categories of services may load on this site."
+msgstr ""

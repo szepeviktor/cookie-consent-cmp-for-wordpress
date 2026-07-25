@@ -1,0 +1,19 @@
+.klaro .cookie-modal {
+    --blue1: var(--wp--preset--color--accent-3, #503aa8);
+    --blue2: var(--wp--preset--color--accent-3, #503aa8);
+    --border-radius: 4px;
+    --button-text-color: var(--wp--preset--color--base, #fff);
+    --dark1: var(--wp--preset--color--base, #fff);
+    --dark2: var(--wp--preset--color--accent-4, #686868);
+    --dark3: var(--wp--preset--color--accent-4, #686868);
+    --font-family: var(--wp--preset--font-family--manrope, Manrope, sans-serif);
+    --green1: var(--wp--preset--color--contrast, #111);
+    --green2: var(--wp--preset--color--contrast, #111);
+    --green3: var(--wp--preset--color--accent-4, #686868);
+    --light1: var(--wp--preset--color--contrast, #111);
+    --light2: color-mix(in srgb, currentColor 20%, transparent);
+    --light3: var(--wp--preset--color--accent-4, #686868);
+    --title-font-family: var(--wp--preset--font-family--manrope, Manrope, sans-serif);
+    --white2: color-mix(in srgb, currentColor 10%, transparent);
+    --white3: var(--wp--preset--color--base, #fff);
+}

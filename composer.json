@@ -1,0 +1,29 @@
+{
+    "name": "szepeviktor/cookie-consent-cmp-for-wordpress",
+    "description": "Klaro-based cookie consent banner with WP Consent API compatibility",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "SzepeViktor\\CookieConsentCmp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Viktor Szépe",
+            "email": "viktor@szepe.net"
+        }
+    ],
+    "require": {
+        "php": "~7.4.0 || ^8.0",
+        "composer-runtime-api": "^2.2"
+    },
+    "require-dev": {
+        "szepeviktor/phpstan-wordpress": "^2.0",
+        "szepeviktor/consistent-versions": "^1.2"
+    },
+    "scripts": {
+        "make-pot": "wp i18n make-pot . languages/cookie-consent-cmp.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\"}'",
+        "phpstan": "phpstan analyze --no-progress --error-format=raw"
+    }
+}

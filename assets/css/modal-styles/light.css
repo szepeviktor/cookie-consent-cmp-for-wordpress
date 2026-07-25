@@ -1,0 +1,71 @@
+.klaro .cookie-modal {
+    --blue1: #315f8c;
+    --blue2: #244b72;
+    --border-radius: 16px;
+    --button-text-color: #fff;
+    --dark1: #fffdf8;
+    --dark2: #d8d2c6;
+    --dark3: #625e56;
+    --font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-size: 15px;
+    --green1: #246b53;
+    --green2: #2f8065;
+    --green3: #61a68e;
+    --light1: #211f1b;
+    --light2: #d8d2c6;
+    --light3: #706b62;
+    --title-font-family: Georgia, 'Times New Roman', serif;
+    --white2: #e9e4da;
+    --white3: #fff;
+}
+
+.klaro .cookie-modal .cm-bg {
+    background: rgba(28, 26, 22, 0.42);
+    backdrop-filter: blur(3px);
+}
+
+.klaro .cookie-modal .cm-modal.cm-klaro {
+    border: 1px solid #e4ded3;
+    box-shadow: 0 28px 80px rgba(53, 47, 38, 0.22);
+}
+
+.klaro .cookie-modal .cm-modal .cm-header {
+    padding: 26px 28px 22px;
+}
+
+.klaro .cookie-modal .cm-modal .cm-header h1 {
+    font-family: var(--title-font-family);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+}
+
+.klaro .cookie-modal .cm-modal .cm-body {
+    padding: 22px 28px;
+}
+
+.klaro .cookie-modal .cm-modal .cm-footer {
+    padding: 18px 28px;
+}
+
+.klaro .cookie-modal button.cm-btn {
+    min-height: 42px;
+    padding: 10px 17px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.klaro .cookie-modal .cm-modal .hide {
+    top: 24px;
+    right: 24px;
+}
+
+@media (max-width: 700px) {
+    .klaro .cookie-modal .cm-modal .cm-header,
+    .klaro .cookie-modal .cm-modal .cm-body,
+    .klaro .cookie-modal .cm-modal .cm-footer {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+}

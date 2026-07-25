@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+
+name: "Release"
+
+on:  # yamllint disable-line rule:truthy
+    release:
+        types:
+        - "published"
+    workflow_dispatch: null
+
+permissions:
+    contents: "write"
+
+concurrency:
+    group: "${{ github.workflow }}-${{ github.ref }}"
+    cancel-in-progress: true
+
+env:
+    PLUGIN_SLUG: "cookie-consent-cmp"
+
+jobs:
+    version_check:
+        name: "Check version consistency"
+        runs-on: "ubuntu-24.04"
+        timeout-minutes: 10
+        outputs:
+            release_tag: "${{ steps.release.outputs.release_tag }}"
+            zip_file: "${{ steps.release.outputs.zip_file }}"
+        steps:
+        -
+            name: "Set up PHP"
+            uses: "shivammathur/setup-php@v2"
+            with:
+                php-version: "8.1"
+                coverage: "none"
+        -
+            name: "Checkout repository"
+            uses: "actions/checkout@v6"
+        -
+            name: "Validate Composer configuration"
+            run: "composer validate --no-interaction --strict"
+        -
+            name: "Install development dependencies"
+            run: "composer install --no-interaction --prefer-dist"
+        -
+            name: "Run static analysis"
+            run: "composer phpstan"
+        -
+            name: "Select and validate target release"
+            id: "release"
+            env:
+                GH_TOKEN: "${{ github.token }}"
+            run: |
+                if test "${{ github.event_name }}" = "release"; then
+                    tag_name="${{ github.event.release.tag_name }}"
+                else
+                    tag_name="$(gh release list --exclude-drafts --exclude-pre-releases --limit 1 --json tagName --jq '.[0].tagName')"
+                fi
+                test -n "${tag_name}"
+                RELEASE_TAG="${tag_name}" vendor/bin/consistent-versions check
+                echo "release_tag=${tag_name}" >> "${GITHUB_OUTPUT}"
+                echo "zip_file=${PLUGIN_SLUG}-${tag_name#v}.zip" >> "${GITHUB_OUTPUT}"
+
+    plugin_zip:
+        name: "📦 Build WordPress plugin ZIP"
+        needs:
+            - "version_check"
+        runs-on: "ubuntu-24.04"
+        timeout-minutes: 10
+        env:
+            RELEASE_TAG: "${{ needs.version_check.outputs.release_tag }}"
+            ZIP_FILE: "${{ needs.version_check.outputs.zip_file }}"
+        steps:
+        -
+            name: "Set up PHP"
+            uses: "shivammathur/setup-php@v2"
+            with:
+                php-version: "7.4"
+                coverage: "none"
+        -
+            name: "Checkout repository"
+            uses: "actions/checkout@v6"
+        -
+            name: "Validate Composer configuration"
+            run: "composer validate --no-interaction --strict"
+        -
+            name: "Create plugin ZIP"
+            run: |
+                composer install \
+                    --no-dev \
+                    --no-interaction \
+                    --prefer-dist \
+                    --optimize-autoloader
+                zip --recurse-paths "${ZIP_FILE}" cookie-consent-cmp.php assets/ languages/ src/ vendor/
+        -
+            name: "Upload ZIP to release"
+            env:
+                GH_TOKEN: "${{ github.token }}"
+            run: |
+                gh release upload "${RELEASE_TAG}" "${ZIP_FILE}" --clobber

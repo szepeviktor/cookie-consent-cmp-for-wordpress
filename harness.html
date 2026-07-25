@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie Consent CMP Harness</title>
+    <link rel="stylesheet" href="./assets/css/klaro.css">
+    <link rel="stylesheet" href="./assets/css/cmp.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        main {
+            margin: 0 auto;
+            max-width: 48rem;
+        }
+
+        .actions {
+            margin: 1rem 0 2rem;
+        }
+
+        .actions button {
+            cursor: pointer;
+            font: inherit;
+            padding: 0.75rem 1rem;
+        }
+
+        iframe,
+        .cmp-youtube-placeholder {
+            display: block;
+            margin-top: 1rem;
+            max-width: 100%;
+        }
+    </style>
+    <script>
+        window.klaroConfig = {
+            version: 1,
+            elementID: 'klaro',
+            storageMethod: 'cookie',
+            storageName: 'klaro',
+            cookieExpiresAfterDays: 365,
+            default: false,
+            mustConsent: false,
+            acceptAll: true,
+            hideDeclineAll: false,
+            hideLearnMore: false,
+            noticeAsModal: false,
+            showNoticeTitle: true,
+            htmlTexts: true,
+            embedded: false,
+            groupByPurpose: true,
+            lang: 'en',
+            translations: {
+                en: {
+                    consentNotice: {
+                        title: 'Privacy settings',
+                        description: 'Choose whether statistics and marketing services may load.'
+                    },
+                    consentModal: {
+                        title: 'Privacy preferences',
+                        description: 'This harness exercises the plugin-owned assets without WordPress.'
+                    },
+                    purposes: {
+                        functional: 'Functional',
+                        statistics: 'Statistics',
+                        marketing: 'Marketing'
+                    },
+                    ok: 'OK',
+                    save: 'Save',
+                    acceptAll: 'Accept all',
+                    declineAll: 'Decline all',
+                    close: 'Close'
+                }
+            },
+            services: [
+                {
+                    name: 'klaro',
+                    title: 'Cookie consent settings',
+                    purposes: ['functional'],
+                    default: true,
+                    required: true,
+                    onlyOnce: true,
+                    cookies: ['klaro'],
+                    translations: {
+                        en: {
+                            title: 'Cookie consent settings',
+                            description: 'Stores the consent choice.'
+                        }
+                    }
+                },
+                {
+                    name: 'google-tag-manager',
+                    title: 'Google Tag Manager',
+                    purposes: ['statistics'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['_ga', '^_ga_.*', '_gid', '^_gat.*'],
+                    translations: {
+                        en: {
+                            title: 'Google Tag Manager',
+                            description: 'Loads analytics tags managed through Google Tag Manager.'
+                        }
+                    }
+                },
+                {
+                    name: 'microsoft-clarity',
+                    title: 'Microsoft Clarity',
+                    purposes: ['statistics'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['_clck', '_clsk']
+                },
+                {
+                    name: 'hotjar',
+                    title: 'Hotjar',
+                    purposes: ['statistics'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['_hjCookieTest', '^_hjSessionUser_.*', '^_hjSession_.*']
+                },
+                {
+                    name: 'meta-pixel',
+                    title: 'Meta Pixel',
+                    purposes: ['marketing'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['_fbp', '_fbc']
+                },
+                {
+                    name: 'linkedin-insight-tag',
+                    title: 'LinkedIn Insight Tag',
+                    purposes: ['marketing'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['li_fat_id', 'li_giant']
+                },
+                {
+                    name: 'youtube',
+                    title: 'YouTube',
+                    purposes: ['marketing'],
+                    default: false,
+                    required: false,
+                    onlyOnce: true,
+                    cookies: ['VISITOR_INFO1_LIVE', 'VISITOR_PRIVACY_METADATA', 'YSC', 'PREF']
+                }
+            ]
+        };
+    </script>
+    <script src="./assets/js/cmp-bootstrap.js"
+        data-gtm-id="GTM-MGK8MGT"
+        data-clarity-project-id="test12345"
+        data-hotjar-id="3868580"
+        data-hotjar-version="6"
+        data-meta-pixel-id="398835454844829"
+        data-linkedin-partner-id="1986332"
+        data-floating="true"
+        data-youtube-service="marketing"></script>
+    <script src="./assets/js/klaro.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1>Cookie Consent CMP Harness</h1>
+        <p>This page exercises the plugin-owned assets with category-level consent.</p>
+        <div class="actions">
+            <button type="button" onclick="window.klaro.show(window.klaroConfig, true);">Privacy settings</button>
+        </div>
+        <iframe
+            width="560"
+            height="315"
+            data-cmp-src="https://www.youtube.com/embed/LgKwD3MYNH8"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+    </main>
+</body>
+</html>
