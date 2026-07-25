@@ -147,6 +147,10 @@ final class AdminPage
                 <div class="notice notice-warning inline">
                     <p><?php esc_html_e('WP Consent API was not detected. The CMP will still render, but the WordPress compatibility bridge will stay inactive until the API plugin is available.', 'cookie-consent-cmp'); ?></p>
                 </div>
+            <?php elseif ($this->consentApiBridge->has_consent_type_conflict()) : ?>
+                <div class="notice notice-warning inline">
+                    <p><?php esc_html_e('Another plugin already provides the WP Consent API consent type. Cookie Consent CMP preserves that value; verify that only one consent management platform controls the site.', 'cookie-consent-cmp'); ?></p>
+                </div>
             <?php endif; ?>
 
             <form action="options.php" method="POST">

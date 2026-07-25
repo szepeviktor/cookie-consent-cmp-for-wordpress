@@ -1,0 +1,10 @@
+{
+  "name": "cookie-consent-cmp-for-wordpress-tests",
+  "private": true,
+  "scripts": {
+    "test:playwright": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

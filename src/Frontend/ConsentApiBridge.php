@@ -8,6 +8,8 @@ final class ConsentApiBridge
 {
     private string $plugin_basename;
 
+    private bool $consent_type_conflict = false;
+
     public function __construct(string $plugin_basename)
     {
         $this->plugin_basename = $plugin_basename;
@@ -16,36 +18,31 @@ final class ConsentApiBridge
     public function register(): void
     {
         add_filter('wp_consent_api_registered_' . $this->plugin_basename, '__return_true');
-        add_filter('wp_get_consent_type', [$this, 'filter_consent_type']);
-        add_filter('wp_consent_categories', [$this, 'filter_categories']);
+        add_filter('wp_get_consent_type', [$this, 'filter_consent_type'], PHP_INT_MAX);
     }
 
-    public function filter_consent_type(): string
+    public function filter_consent_type(string $consent_type = ''): string
     {
+        if ($consent_type !== '') {
+            $this->consent_type_conflict = true;
+
+            return $consent_type;
+        }
+
         return 'optin';
     }
 
-    /**
-     * @param mixed $categories
-     * @return mixed
-     */
-    public function filter_categories($categories)
+    public function has_consent_type_conflict(): bool
     {
-        $allowed = [
-            'functional' => true,
-            'statistics' => true,
-            'marketing' => true,
-        ];
+        if (function_exists('wp_get_consent_type')) {
+            $consent_type = wp_get_consent_type();
 
-        if (! is_array($categories)) {
-            return $categories;
+            if ($consent_type !== 'optin') {
+                $this->consent_type_conflict = true;
+            }
         }
 
-        if (array_values($categories) === $categories) {
-            return array_values(array_intersect($categories, array_keys($allowed)));
-        }
-
-        return array_intersect_key($categories, $allowed);
+        return $this->consent_type_conflict;
     }
 
     public function is_api_available(): bool
@@ -53,116 +50,70 @@ final class ConsentApiBridge
         return function_exists('wp_has_consent');
     }
 
-    public function inline_script(): string
+    /**
+     * Register configured services before WP Consent API localizes its frontend data.
+     *
+     * @param array<int, array<string, mixed>> $services
+     */
+    public function register_services(array $services): void
     {
-        return <<<'JS'
-(function () {
-    function dispatchConsentTypeDefined() {
-        if (typeof window.dispatchEvent === 'function') {
-            if (typeof window.Event === 'function') {
-                window.dispatchEvent(new Event('wp_consent_type_defined'));
-                return;
-            }
-
-            if (document.createEvent) {
-                var event = document.createEvent('Event');
-                event.initEvent('wp_consent_type_defined', true, true);
-                window.dispatchEvent(event);
-            }
-        }
-    }
-
-    function setConsent(category, allowed) {
-        if (typeof window.wp_set_consent === 'function') {
-            window.wp_set_consent(category, allowed ? 'allow' : 'deny');
-        }
-    }
-
-    function hasPurposeConsent(manager, purpose) {
-        var services;
-        var matched = false;
-        var index;
-        var service;
-
-        if (!manager.confirmed || !manager.config || !manager.config.services) {
-            return false;
+        if (! function_exists('wp_add_cookie_info')) {
+            return;
         }
 
-        services = manager.config.services;
+        foreach ($services as $service) {
+            $name = isset($service['name']) && is_string($service['name'])
+                ? $service['name']
+                : '';
+            $purposes = isset($service['purposes']) && is_array($service['purposes'])
+                ? $service['purposes']
+                : [];
+            $category = isset($purposes[0]) && is_string($purposes[0])
+                ? $purposes[0]
+                : 'functional';
+            $cookies = isset($service['cookies']) && is_array($service['cookies'])
+                ? $service['cookies']
+                : [];
+            $description = $this->service_description($service);
 
-        for (index = 0; index < services.length; index++) {
-            service = services[index];
-
-            if (!service.purposes || service.purposes.indexOf(purpose) === -1 || service.required) {
+            if ($name === '') {
                 continue;
             }
 
-            matched = true;
+            foreach ($cookies as $cookie) {
+                if (! is_string($cookie) || $cookie === '') {
+                    continue;
+                }
 
-            if (!manager.consents || !manager.consents[service.name]) {
-                return false;
+                wp_add_cookie_info(
+                    $cookie,
+                    $name,
+                    $category,
+                    __('Varies', 'cookie-consent-cmp'),
+                    $description
+                );
             }
         }
-
-        return matched;
     }
 
-    function applyFromManager(manager) {
-        if (!manager) {
-            return false;
-        }
-
-        setConsent('functional', true);
-        setConsent('statistics', hasPurposeConsent(manager, 'statistics'));
-        setConsent('marketing', hasPurposeConsent(manager, 'marketing'));
-
-        return true;
-    }
-
-    function bindManager(attempt) {
-        var manager;
-        var watcher;
-
-        if (!window.klaro || typeof window.klaro.getManager !== 'function') {
-            if (attempt < 40) {
-                window.setTimeout(function () {
-                    bindManager(attempt + 1);
-                }, 250);
-            }
-            return;
-        }
-
-        try {
-            manager = window.klaro.getManager();
-        } catch (error) {
-            return;
-        }
-
-        if (!manager) {
-            if (attempt < 40) {
-                window.setTimeout(function () {
-                    bindManager(attempt + 1);
-                }, 250);
-            }
-            return;
-        }
-
-        watcher = {
-            update: function (currentManager, type) {
-                if (type === 'applyConsents' || type === 'saveConsents' || type === 'consents') {
-                    applyFromManager(currentManager);
+    /**
+     * @param array<string, mixed> $service
+     */
+    private function service_description(array $service): string
+    {
+        if (isset($service['translations']) && is_array($service['translations'])) {
+            foreach ($service['translations'] as $translation) {
+                if (is_array($translation)
+                    && isset($translation['description'])
+                    && is_string($translation['description'])
+                ) {
+                    return $translation['description'];
                 }
             }
-        };
+        }
 
-        manager.watch(watcher);
-        applyFromManager(manager);
-    }
-
-    window.wp_consent_type = 'optin';
-    dispatchConsentTypeDefined();
-    bindManager(0);
-})();
-JS;
+        return isset($service['title']) && is_string($service['title'])
+            ? $service['title']
+            : __('Configured consent service.', 'cookie-consent-cmp');
     }
 }

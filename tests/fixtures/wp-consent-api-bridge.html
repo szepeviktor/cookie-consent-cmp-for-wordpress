@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>WP Consent API bridge fixture</title>
+</head>
+<body>
+    <script>
+        (function () {
+            'use strict';
+
+            var parameters = new URLSearchParams(window.location.search);
+            var manager;
+
+            window.bridgeFixture = {
+                categoryCalls: [],
+                serviceCalls: [],
+                documentConsentTypeEvents: 0,
+                windowConsentTypeEvents: 0,
+                errors: []
+            };
+
+            document.addEventListener('wp_consent_type_defined', function () {
+                window.bridgeFixture.documentConsentTypeEvents++;
+            });
+            window.addEventListener('wp_consent_type_defined', function () {
+                window.bridgeFixture.windowConsentTypeEvents++;
+            });
+            document.addEventListener('cookie_consent_cmp_sync_error', function (event) {
+                window.bridgeFixture.errors.push(event.detail.message);
+            });
+
+            if (parameters.get('existing')) {
+                window.wp_consent_type = parameters.get('existing');
+            }
+
+            if (!parameters.has('missingCategoryApi')) {
+                window.wp_set_consent = function (category, value) {
+                    window.bridgeFixture.categoryCalls.push({
+                        category: category,
+                        value: value
+                    });
+                };
+            }
+
+            if (!parameters.has('legacy')) {
+                window.wp_set_service_consent = function (service, consented) {
+                    window.bridgeFixture.serviceCalls.push({
+                        service: service,
+                        consented: consented
+                    });
+                };
+            }
+
+            manager = {
+                confirmed: true,
+                consents: {
+                    klaro: true,
+                    analytics: true,
+                    clarity: false,
+                    youtube: true,
+                    meta: false
+                },
+                config: {
+                    services: [
+                        {
+                            name: 'klaro',
+                            purposes: ['functional'],
+                            required: true
+                        },
+                        {
+                            name: 'analytics',
+                            purposes: ['statistics'],
+                            required: false
+                        },
+                        {
+                            name: 'clarity',
+                            purposes: ['statistics'],
+                            required: false
+                        },
+                        {
+                            name: 'youtube',
+                            purposes: ['marketing'],
+                            required: false
+                        },
+                        {
+                            name: 'meta',
+                            purposes: ['marketing'],
+                            required: false
+                        }
+                    ]
+                },
+                watch: function (watcher) {
+                    this.watcher = watcher;
+                },
+                trigger: function (type) {
+                    this.watcher.update(this, type);
+                }
+            };
+
+            window.bridgeFixture.manager = manager;
+            window.klaro = {
+                getManager: function () {
+                    return manager;
+                }
+            };
+        })();
+    </script>
+    <script src="../../assets/js/wp-consent-api-bridge.js"></script>
+</body>
+</html>

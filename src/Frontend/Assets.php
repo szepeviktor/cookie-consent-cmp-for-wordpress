@@ -28,6 +28,9 @@ final class Assets
 
     public function register(): void
     {
+        $lang = strtolower(substr(determine_locale(), 0, 2));
+        $this->consent_api_bridge->register_services($this->build_services($lang));
+
         add_action('wp_enqueue_scripts', [$this, 'enqueue'], 100);
         add_filter('script_loader_tag', [$this, 'filter_bootstrap_tag'], 10, 3);
     }
@@ -36,6 +39,7 @@ final class Assets
     {
         $options = $this->options->all();
         $modalStyle = (string) $options['modal_style'];
+        $klaroConfig = $this->build_klaro_config();
 
         wp_enqueue_style(
             'cookie-consent-cmp-klaro',
@@ -83,15 +87,19 @@ final class Assets
 
         wp_add_inline_script(
             'cookie-consent-cmp-klaro',
-            'window.klaroConfig = ' . wp_json_encode($this->build_klaro_config()) . ';',
+            'window.klaroConfig = ' . wp_json_encode($klaroConfig) . ';',
             'before'
         );
 
-        wp_add_inline_script(
-            'cookie-consent-cmp-klaro',
-            $this->consent_api_bridge->inline_script(),
-            'after'
-        );
+        if ($this->consent_api_bridge->is_api_available()) {
+            wp_enqueue_script(
+                'cookie-consent-cmp-consent-api-bridge',
+                plugins_url('assets/js/wp-consent-api-bridge.js', Config::get('filePath')),
+                ['cookie-consent-cmp-klaro', 'wp-consent-api'],
+                Config::get('version'),
+                true
+            );
+        }
     }
 
     public function filter_bootstrap_tag(string $tag, string $handle, string $src): string

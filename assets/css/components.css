@@ -1,8 +1,11 @@
-.cmp-floating-settings {
+.cookie-consent-cmp {
     position: fixed;
     left: calc(20px + env(safe-area-inset-left, 0px));
     bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     z-index: 980;
+}
+
+.cookie-consent-cmp .cmp-floating-settings {
     min-height: 44px;
     padding: 8px 12px;
     cursor: pointer;
@@ -49,7 +52,7 @@
 }
 
 @media (max-width: 700px) {
-    .cmp-floating-settings {
+    .cookie-consent-cmp {
         left: calc(16px + env(safe-area-inset-left, 0px));
         bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     }

@@ -899,6 +899,7 @@
     function addFloatingButton(script) {
         var floating = script ? script.getAttribute('data-floating') : null;
         var button;
+        var container;
         var label;
 
         if (floating === null || floating === 'false' || floating === '0' || document.getElementById('cmp-floating-settings')) {
@@ -906,6 +907,8 @@
         }
 
         label = getFloatingButtonLabel();
+        container = document.createElement('div');
+        container.className = 'cookie-consent-cmp';
         button = document.createElement('button');
         button.id = 'cmp-floating-settings';
         button.className = 'cmp-floating-settings';
@@ -918,7 +921,8 @@
                 window.klaro.show(window.klaroConfig, true);
             }
         });
-        document.body.appendChild(button);
+        container.appendChild(button);
+        document.body.appendChild(container);
     }
 
     var script = document.currentScript;

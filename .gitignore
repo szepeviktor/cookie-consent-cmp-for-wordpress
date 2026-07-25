@@ -2,3 +2,6 @@
 /vendor/
 /*.zip
 todo*
+/node_modules/
+/playwright-report/
+/test-results/
