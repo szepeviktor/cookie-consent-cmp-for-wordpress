@@ -190,6 +190,8 @@ final class Assets
                     ],
                     'purposes' => [
                         'functional' => __('Functional', 'cookie-consent-cmp'),
+                        'preferences' => __('Preferences', 'cookie-consent-cmp'),
+                        'statistics-anonymous' => __('Anonymous statistics', 'cookie-consent-cmp'),
                         'statistics' => __('Statistics', 'cookie-consent-cmp'),
                         'marketing' => __('Marketing', 'cookie-consent-cmp'),
                     ],
@@ -241,6 +243,15 @@ final class Assets
                 'optOut' => false,
                 'onlyOnce' => true,
                 'cookies' => ['klaro'],
+                'wpConsentCategory' => 'functional',
+                'wpConsentCookies' => [
+                    [
+                        'name' => 'klaro',
+                        'expires' => __('365 days', 'cookie-consent-cmp'),
+                        'function' => __('Stores the visitor’s consent choices.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                ],
                 'translations' => [
                     $lang => [
                         'title' => __('Cookie consent settings', 'cookie-consent-cmp'),
@@ -248,6 +259,30 @@ final class Assets
                     ],
                 ],
             ],
+            $this->build_category_service(
+                'preferences',
+                __('Preference storage', 'cookie-consent-cmp'),
+                __('Allows services that remember visitor preferences.', 'cookie-consent-cmp'),
+                $lang
+            ),
+            $this->build_category_service(
+                'statistics-anonymous',
+                __('Anonymous statistics', 'cookie-consent-cmp'),
+                __('Allows anonymous, first-party audience measurement.', 'cookie-consent-cmp'),
+                $lang
+            ),
+            $this->build_category_service(
+                'statistics',
+                __('Statistics', 'cookie-consent-cmp'),
+                __('Allows identifiable audience measurement and analytics.', 'cookie-consent-cmp'),
+                $lang
+            ),
+            $this->build_category_service(
+                'marketing',
+                __('Marketing', 'cookie-consent-cmp'),
+                __('Allows advertising measurement and visitor profiling.', 'cookie-consent-cmp'),
+                $lang
+            ),
         ];
 
         if ($options['gtm_id'] !== '') {
@@ -264,6 +299,20 @@ final class Assets
                     '^_ga_.*',
                     '_gid',
                     '^_gat.*',
+                ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => '_ga',
+                        'expires' => __('2 years', 'cookie-consent-cmp'),
+                        'function' => __('Distinguishes visitors for analytics reporting.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_gid',
+                        'expires' => __('24 hours', 'cookie-consent-cmp'),
+                        'function' => __('Distinguishes visitors for daily analytics reporting.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
                 ],
                 'translations' => [
                     $lang => [
@@ -286,6 +335,20 @@ final class Assets
                 'cookies' => [
                     '_clck',
                     '_clsk',
+                ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => '_clck',
+                        'expires' => __('1 year', 'cookie-consent-cmp'),
+                        'function' => __('Persists the Clarity visitor identifier and preferences.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_clsk',
+                        'expires' => __('1 day', 'cookie-consent-cmp'),
+                        'function' => __('Groups Clarity page views into a recording session.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
                 ],
                 'translations' => [
                     $lang => [
@@ -321,6 +384,32 @@ final class Assets
                     '_hjHasCachedUserAttributes',
                     '_hjUserAttributesHash',
                 ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => '_hjClosedSurveyInvites',
+                        'expires' => __('1 year', 'cookie-consent-cmp'),
+                        'function' => __('Prevents a dismissed Hotjar survey invitation from reappearing.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_hjDonePolls',
+                        'expires' => __('1 year', 'cookie-consent-cmp'),
+                        'function' => __('Prevents a completed Hotjar poll from reappearing.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_hjMinimizedPolls',
+                        'expires' => __('1 year', 'cookie-consent-cmp'),
+                        'function' => __('Keeps a minimized Hotjar poll minimized.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_hjShownFeedbackMessage',
+                        'expires' => __('1 day', 'cookie-consent-cmp'),
+                        'function' => __('Prevents repeated display of Hotjar feedback messaging.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                ],
                 'translations' => [
                     $lang => [
                         'title' => __('Hotjar', 'cookie-consent-cmp'),
@@ -343,6 +432,20 @@ final class Assets
                     '_fbp',
                     '_fbc',
                 ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => '_fbp',
+                        'expires' => __('90 days', 'cookie-consent-cmp'),
+                        'function' => __('Identifies browsers for Meta advertising measurement.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => '_fbc',
+                        'expires' => __('90 days', 'cookie-consent-cmp'),
+                        'function' => __('Stores the Meta advertising click identifier.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                ],
                 'translations' => [
                     $lang => [
                         'title' => __('Meta Pixel', 'cookie-consent-cmp'),
@@ -364,6 +467,20 @@ final class Assets
                 'cookies' => [
                     'li_fat_id',
                     'li_giant',
+                ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => 'li_fat_id',
+                        'expires' => __('30 days', 'cookie-consent-cmp'),
+                        'function' => __('Stores the LinkedIn advertising click identifier.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
+                    [
+                        'name' => 'li_giant',
+                        'expires' => __('7 days', 'cookie-consent-cmp'),
+                        'function' => __('Supports LinkedIn conversion attribution.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                    ],
                 ],
                 'translations' => [
                     $lang => [
@@ -389,6 +506,36 @@ final class Assets
                     'YSC',
                     'PREF',
                 ],
+                'wpConsentCookies' => [
+                    [
+                        'name' => 'VISITOR_INFO1_LIVE',
+                        'expires' => __('180 days', 'cookie-consent-cmp'),
+                        'function' => __('Measures bandwidth and player interface selection.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                        'domain' => 'https://www.youtube.com',
+                    ],
+                    [
+                        'name' => 'VISITOR_PRIVACY_METADATA',
+                        'expires' => __('180 days', 'cookie-consent-cmp'),
+                        'function' => __('Stores the visitor’s YouTube privacy state.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                        'domain' => 'https://www.youtube.com',
+                    ],
+                    [
+                        'name' => 'YSC',
+                        'expires' => __('Session', 'cookie-consent-cmp'),
+                        'function' => __('Maintains YouTube video-view session data.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                        'domain' => 'https://www.youtube.com',
+                    ],
+                    [
+                        'name' => 'PREF',
+                        'expires' => __('8 months', 'cookie-consent-cmp'),
+                        'function' => __('Stores YouTube playback and display preferences.', 'cookie-consent-cmp'),
+                        'type' => 'HTTP',
+                        'domain' => 'https://www.youtube.com',
+                    ],
+                ],
                 'translations' => [
                     $lang => [
                         'title' => __('YouTube', 'cookie-consent-cmp'),
@@ -399,5 +546,33 @@ final class Assets
         }
 
         return $services;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function build_category_service(
+        string $category,
+        string $title,
+        string $description,
+        string $lang
+    ): array {
+        return [
+            'name' => 'wp-consent-category-' . $category,
+            'title' => $title,
+            'purposes' => [$category],
+            'default' => false,
+            'required' => false,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => [],
+            'wpConsentCategory' => $category,
+            'translations' => [
+                $lang => [
+                    'title' => $title,
+                    'description' => $description,
+                ],
+            ],
+        ];
     }
 }

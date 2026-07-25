@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>WP Consent API integration fixture</title>
+</head>
+<body>
+    <script>
+        window.consent_api = {
+            consent_type: 'optin',
+            waitfor_consent_hook: false,
+            cookie_expiration: 365,
+            cookie_prefix: 'wp_consent',
+            services: [
+                {name: 'analytics', category: 'statistics'},
+                {name: 'clarity', category: 'statistics'},
+                {name: 'youtube', category: 'marketing'},
+                {name: 'meta', category: 'marketing'}
+            ]
+        };
+    </script>
+    <script src="wp-consent-api-2.0.1.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var manager = {
+                confirmed: true,
+                consents: {
+                    klaro: true,
+                    'wp-consent-category-preferences': true,
+                    'wp-consent-category-statistics-anonymous': true,
+                    'wp-consent-category-statistics': true,
+                    'wp-consent-category-marketing': true,
+                    analytics: true,
+                    clarity: false,
+                    youtube: true,
+                    meta: false
+                },
+                config: {
+                    services: [
+                        {
+                            name: 'klaro',
+                            purposes: ['functional'],
+                            required: true,
+                            wpConsentCategory: 'functional'
+                        },
+                        {
+                            name: 'wp-consent-category-preferences',
+                            purposes: ['preferences'],
+                            wpConsentCategory: 'preferences'
+                        },
+                        {
+                            name: 'wp-consent-category-statistics-anonymous',
+                            purposes: ['statistics-anonymous'],
+                            wpConsentCategory: 'statistics-anonymous'
+                        },
+                        {
+                            name: 'wp-consent-category-statistics',
+                            purposes: ['statistics'],
+                            wpConsentCategory: 'statistics'
+                        },
+                        {
+                            name: 'wp-consent-category-marketing',
+                            purposes: ['marketing'],
+                            wpConsentCategory: 'marketing'
+                        },
+                        {name: 'analytics', purposes: ['statistics']},
+                        {name: 'clarity', purposes: ['statistics']},
+                        {name: 'youtube', purposes: ['marketing']},
+                        {name: 'meta', purposes: ['marketing']}
+                    ]
+                },
+                watch: function (watcher) {
+                    this.watcher = watcher;
+                },
+                trigger: function (type) {
+                    this.watcher.update(this, type);
+                }
+            };
+
+            window.integrationFixture = {
+                manager: manager,
+                serviceEvents: [],
+                categoryWrites: []
+            };
+            var setConsent = window.wp_set_consent;
+            window.wp_set_consent = function (category, value) {
+                window.integrationFixture.categoryWrites.push({
+                    category: category,
+                    value: value
+                });
+                setConsent(category, value);
+            };
+            document.addEventListener(
+                'wp_consent_api_status_change_service',
+                function (event) {
+                    window.integrationFixture.serviceEvents.push(event.detail);
+                }
+            );
+            window.klaro = {
+                getManager: function () {
+                    return manager;
+                }
+            };
+        })();
+    </script>
+    <script src="../../assets/js/wp-consent-api-bridge.js"></script>
+</body>
+</html>

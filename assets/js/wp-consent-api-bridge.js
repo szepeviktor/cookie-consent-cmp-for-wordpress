@@ -39,16 +39,34 @@
     }
 
     function setCategoryConsent(category, consented) {
+        var consentValue = consented ? 'allow' : 'deny';
+        var currentValue;
+
         if (typeof window.wp_set_consent !== 'function') {
             return false;
         }
 
-        window.wp_set_consent(category, consented ? 'allow' : 'deny');
+        if (window.consent_api
+            && typeof window.consent_api.cookie_prefix === 'string'
+            && typeof window.consent_api_get_cookie === 'function'
+        ) {
+            currentValue = window.consent_api_get_cookie(
+                window.consent_api.cookie_prefix + '_' + category
+            );
+
+            if (currentValue === consentValue) {
+                return true;
+            }
+        }
+
+        window.wp_set_consent(category, consentValue);
 
         return true;
     }
 
     function setServiceConsent(service, consented) {
+        var currentConsent;
+
         if (typeof window.wp_set_service_consent !== 'function') {
             return;
         }
@@ -57,6 +75,15 @@
             && lastServiceConsents[service] === consented
         ) {
             return;
+        }
+
+        if (typeof window.wp_has_service_consent === 'function') {
+            currentConsent = !!window.wp_has_service_consent(service);
+
+            if (currentConsent === consented) {
+                lastServiceConsents[service] = consented;
+                return;
+            }
         }
 
         window.wp_set_service_consent(service, consented);
@@ -71,11 +98,14 @@
         return manager.config.services;
     }
 
-    function hasPurposeConsent(manager, purpose) {
+    function hasCategoryConsent(manager, category) {
         var services = configuredServices(manager);
-        var matched = false;
         var index;
         var service;
+
+        if (category === 'functional') {
+            return true;
+        }
 
         if (!manager.confirmed) {
             return false;
@@ -84,18 +114,12 @@
         for (index = 0; index < services.length; index++) {
             service = services[index];
 
-            if (!service.purposes || service.purposes.indexOf(purpose) === -1 || service.required) {
-                continue;
-            }
-
-            matched = true;
-
-            if (!manager.consents || !manager.consents[service.name]) {
-                return false;
+            if (service.wpConsentCategory === category) {
+                return !!(manager.consents && manager.consents[service.name]);
             }
         }
 
-        return matched;
+        return false;
     }
 
     function syncServices(manager) {
@@ -107,7 +131,7 @@
         for (index = 0; index < services.length; index++) {
             service = services[index];
 
-            if (!service.name || service.required) {
+            if (!service.name || service.required || service.wpConsentCategory) {
                 continue;
             }
 
@@ -119,19 +143,20 @@
     }
 
     function syncManager(manager) {
-        var statisticsConsent;
         var success = true;
 
         if (!manager) {
             return false;
         }
 
-        statisticsConsent = hasPurposeConsent(manager, 'statistics');
-        success = setCategoryConsent('functional', true) && success;
-        success = setCategoryConsent('preferences', false) && success;
-        success = setCategoryConsent('statistics-anonymous', statisticsConsent) && success;
-        success = setCategoryConsent('statistics', statisticsConsent) && success;
-        success = setCategoryConsent('marketing', hasPurposeConsent(manager, 'marketing')) && success;
+        success = setCategoryConsent('functional', hasCategoryConsent(manager, 'functional')) && success;
+        success = setCategoryConsent('preferences', hasCategoryConsent(manager, 'preferences')) && success;
+        success = setCategoryConsent(
+            'statistics-anonymous',
+            hasCategoryConsent(manager, 'statistics-anonymous')
+        ) && success;
+        success = setCategoryConsent('statistics', hasCategoryConsent(manager, 'statistics')) && success;
+        success = setCategoryConsent('marketing', hasCategoryConsent(manager, 'marketing')) && success;
         syncServices(manager);
 
         if (!success) {

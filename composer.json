@@ -24,6 +24,7 @@
     },
     "scripts": {
         "make-pot": "wp i18n make-pot . languages/cookie-consent-cmp.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\"}'",
-        "phpstan": "phpstan analyze --no-progress --error-format=raw"
+        "phpstan": "phpstan analyze --no-progress --error-format=raw",
+        "test:consent-api": "php tests/php/consent-api-bridge.php"
     }
 }

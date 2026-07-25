@@ -6,6 +6,8 @@ namespace SzepeViktor\CookieConsentCmp\Frontend;
 
 final class ConsentApiBridge
 {
+    private const CONSENT_COOKIE_EXPIRATION_DAYS = 365;
+
     private string $plugin_basename;
 
     private bool $consent_type_conflict = false;
@@ -19,6 +21,10 @@ final class ConsentApiBridge
     {
         add_filter('wp_consent_api_registered_' . $this->plugin_basename, '__return_true');
         add_filter('wp_get_consent_type', [$this, 'filter_consent_type'], PHP_INT_MAX);
+        add_filter(
+            'wp_consent_api_cookie_expiration',
+            [$this, 'filter_cookie_expiration']
+        );
     }
 
     public function filter_consent_type(string $consent_type = ''): string
@@ -50,6 +56,11 @@ final class ConsentApiBridge
         return function_exists('wp_has_consent');
     }
 
+    public function filter_cookie_expiration(): int
+    {
+        return self::CONSENT_COOKIE_EXPIRATION_DAYS;
+    }
+
     /**
      * Register configured services before WP Consent API localizes its frontend data.
      *
@@ -61,6 +72,10 @@ final class ConsentApiBridge
             return;
         }
 
+        $registered_cookies = function_exists('wp_get_cookie_info')
+            ? wp_get_cookie_info()
+            : [];
+
         foreach ($services as $service) {
             $name = isset($service['name']) && is_string($service['name'])
                 ? $service['name']
@@ -71,8 +86,8 @@ final class ConsentApiBridge
             $category = isset($purposes[0]) && is_string($purposes[0])
                 ? $purposes[0]
                 : 'functional';
-            $cookies = isset($service['cookies']) && is_array($service['cookies'])
-                ? $service['cookies']
+            $cookies = isset($service['wpConsentCookies']) && is_array($service['wpConsentCookies'])
+                ? $service['wpConsentCookies']
                 : [];
             $description = $this->service_description($service);
 
@@ -81,17 +96,36 @@ final class ConsentApiBridge
             }
 
             foreach ($cookies as $cookie) {
-                if (! is_string($cookie) || $cookie === '') {
+                if (! is_array($cookie)
+                    || ! isset($cookie['name'])
+                    || ! is_string($cookie['name'])
+                    || $cookie['name'] === ''
+                    || isset($registered_cookies[$cookie['name']])
+                ) {
                     continue;
                 }
 
                 wp_add_cookie_info(
-                    $cookie,
+                    $cookie['name'],
                     $name,
                     $category,
-                    __('Varies', 'cookie-consent-cmp'),
-                    $description
+                    isset($cookie['expires']) && is_string($cookie['expires'])
+                        ? $cookie['expires']
+                        : __('Varies', 'cookie-consent-cmp'),
+                    isset($cookie['function']) && is_string($cookie['function'])
+                        ? $cookie['function']
+                        : $description,
+                    '',
+                    false,
+                    false,
+                    isset($cookie['type']) && is_string($cookie['type'])
+                        ? $cookie['type']
+                        : 'HTTP',
+                    isset($cookie['domain']) && is_string($cookie['domain'])
+                        ? $cookie['domain']
+                        : ''
                 );
+                $registered_cookies[$cookie['name']] = true;
             }
         }
     }
