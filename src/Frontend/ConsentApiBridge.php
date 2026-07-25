@@ -19,7 +19,10 @@ final class ConsentApiBridge
 
     public function register(): void
     {
-        add_filter('wp_consent_api_registered_' . $this->plugin_basename, '__return_true');
+        add_filter(
+            sprintf('wp_consent_api_registered_%s', $this->plugin_basename),
+            '__return_true'
+        );
         add_filter('wp_get_consent_type', [$this, 'filter_consent_type'], PHP_INT_MAX);
         add_filter(
             'wp_consent_api_cookie_expiration',
@@ -77,57 +80,88 @@ final class ConsentApiBridge
             : [];
 
         foreach ($services as $service) {
-            $name = isset($service['name']) && is_string($service['name'])
-                ? $service['name']
-                : '';
-            $purposes = isset($service['purposes']) && is_array($service['purposes'])
-                ? $service['purposes']
-                : [];
-            $category = isset($purposes[0]) && is_string($purposes[0])
-                ? $purposes[0]
-                : 'functional';
-            $cookies = isset($service['wpConsentCookies']) && is_array($service['wpConsentCookies'])
-                ? $service['wpConsentCookies']
-                : [];
-            $description = $this->service_description($service);
+            $serviceData = $this->serviceRegistrationData($service);
 
-            if ($name === '') {
+            if ($serviceData === null) {
                 continue;
             }
 
-            foreach ($cookies as $cookie) {
-                if (! is_array($cookie)
-                    || ! isset($cookie['name'])
-                    || ! is_string($cookie['name'])
-                    || $cookie['name'] === ''
-                    || isset($registered_cookies[$cookie['name']])
-                ) {
+            foreach ($serviceData['cookies'] as $cookie) {
+                if (! is_array($cookie) || ! isset($cookie['name']) || ! is_string($cookie['name'])) {
                     continue;
                 }
 
+                if ($cookie['name'] === '' || isset($registered_cookies[$cookie['name']])) {
+                    continue;
+                }
+
+                $details = $this->cookieDetails($cookie, $serviceData['description']);
                 wp_add_cookie_info(
                     $cookie['name'],
-                    $name,
-                    $category,
-                    isset($cookie['expires']) && is_string($cookie['expires'])
-                        ? $cookie['expires']
-                        : __('Varies', 'cookie-consent-cmp'),
-                    isset($cookie['function']) && is_string($cookie['function'])
-                        ? $cookie['function']
-                        : $description,
+                    $serviceData['name'],
+                    $serviceData['category'],
+                    $details['expires'],
+                    $details['function'],
                     '',
                     false,
                     false,
-                    isset($cookie['type']) && is_string($cookie['type'])
-                        ? $cookie['type']
-                        : 'HTTP',
-                    isset($cookie['domain']) && is_string($cookie['domain'])
-                        ? $cookie['domain']
-                        : ''
+                    $details['type'],
+                    $details['domain']
                 );
                 $registered_cookies[$cookie['name']] = true;
             }
         }
+    }
+
+    /**
+     * @param array<string, mixed> $service
+     * @return array{name: string, category: string, cookies: array<mixed>, description: string}|null
+     */
+    private function serviceRegistrationData(array $service): ?array
+    {
+        $name = isset($service['name']) && is_string($service['name'])
+            ? $service['name']
+            : '';
+        $purposes = isset($service['purposes']) && is_array($service['purposes'])
+            ? $service['purposes']
+            : [];
+
+        if ($name === '') {
+            return null;
+        }
+
+        return [
+            'name' => $name,
+            'category' => isset($purposes[0]) && is_string($purposes[0])
+                ? $purposes[0]
+                : 'functional',
+            'cookies' => isset($service['wpConsentCookies']) && is_array($service['wpConsentCookies'])
+                ? $service['wpConsentCookies']
+                : [],
+            'description' => $this->service_description($service),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $cookie
+     * @return array{expires: string, function: string, type: string, domain: string}
+     */
+    private function cookieDetails(array $cookie, string $description): array
+    {
+        return [
+            'expires' => isset($cookie['expires']) && is_string($cookie['expires'])
+                ? $cookie['expires']
+                : __('Varies', 'cookie-consent-cmp'),
+            'function' => isset($cookie['function']) && is_string($cookie['function'])
+                ? $cookie['function']
+                : $description,
+            'type' => isset($cookie['type']) && is_string($cookie['type'])
+                ? $cookie['type']
+                : 'HTTP',
+            'domain' => isset($cookie['domain']) && is_string($cookie['domain'])
+                ? $cookie['domain']
+                : '',
+        ];
     }
 
     /**

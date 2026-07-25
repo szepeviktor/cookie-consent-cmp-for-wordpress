@@ -20,11 +20,19 @@
     },
     "require-dev": {
         "szepeviktor/phpstan-wordpress": "^2.0",
-        "szepeviktor/consistent-versions": "^1.2"
+        "szepeviktor/consistent-versions": "^1.2",
+        "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^1.1",
+        "wp-coding-standards/wpcs": "3.1.0 as 2.3.0"
     },
     "scripts": {
         "make-pot": "wp i18n make-pot . languages/cookie-consent-cmp.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\"}'",
+        "phpcs": "php8.5 vendor/bin/phpcs -s --standard=PSR12NeutronRuleset --exclude=PEAR.Functions.FunctionCallSignature src/ cookie-consent-cmp.php",
         "phpstan": "phpstan analyze --no-progress --error-format=raw",
         "test:consent-api": "php tests/php/consent-api-bridge.php"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

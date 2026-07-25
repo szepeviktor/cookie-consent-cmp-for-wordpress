@@ -18,7 +18,6 @@ use function esc_attr;
 use function esc_html;
 use function esc_html_e;
 use function esc_textarea;
-use function get_option;
 use function register_setting;
 use function selected;
 use function settings_fields;
@@ -62,6 +61,15 @@ final class AdminPage
 
     public function addFields(): void
     {
+        $this->registerSettings();
+        $this->addSections();
+        $this->addBannerFields();
+        $this->addIntegrationFields();
+        $this->addDisplayFields();
+    }
+
+    private function registerSettings(): void
+    {
         register_setting(
             self::OPTION_GROUP,
             Options::OPTION_NAME,
@@ -71,7 +79,10 @@ final class AdminPage
                 'sanitize_callback' => [$this->options, 'sanitize'],
             ]
         );
+    }
 
+    private function addSections(): void
+    {
         add_settings_section(
             self::BANNER_SECTION,
             __('Banner copy', 'cookie-consent-cmp'),
@@ -90,34 +101,40 @@ final class AdminPage
             [$this, 'renderIntegrationsSection'],
             self::PAGE_SLUG
         );
+    }
 
-        $this->addTextField('notice_title', __('Notice title', 'cookie-consent-cmp'), self::BANNER_SECTION);
-        $this->addTextareaField('notice_description', __('Notice description', 'cookie-consent-cmp'), self::BANNER_SECTION);
-        $this->addTextField('modal_title', __('Modal title', 'cookie-consent-cmp'), self::BANNER_SECTION);
-        $this->addTextareaField('modal_description', __('Modal description', 'cookie-consent-cmp'), self::BANNER_SECTION);
+    private function addBannerFields(): void
+    {
+        $this->addTextField(
+            'notice_title',
+            __('Notice title', 'cookie-consent-cmp'),
+            self::BANNER_SECTION
+        );
+        $this->addTextareaField(
+            'notice_description',
+            __('Notice description', 'cookie-consent-cmp'),
+            self::BANNER_SECTION
+        );
+        $this->addTextField(
+            'modal_title',
+            __('Modal title', 'cookie-consent-cmp'),
+            self::BANNER_SECTION
+        );
+        $this->addTextareaField(
+            'modal_description',
+            __('Modal description', 'cookie-consent-cmp'),
+            self::BANNER_SECTION
+        );
+    }
+
+    private function addDisplayFields(): void
+    {
         add_settings_field(
             'cookie-consent-cmp-modal-style',
             __('Modal style', 'cookie-consent-cmp'),
             [$this, 'renderModalStyleField'],
             self::PAGE_SLUG,
             self::DISPLAY_SECTION
-        );
-        $this->addTextField('gtm_id', __('Google Tag Manager ID', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        $this->addTextField('clarity_project_id', __('Microsoft Clarity project ID', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        $this->addTextField('hotjar_id', __('Hotjar site ID', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        $this->addNumberField('hotjar_version', __('Hotjar script version', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        $this->addTextField('meta_pixel_id', __('Meta Pixel ID', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        $this->addTextField('linkedin_partner_id', __('LinkedIn partner ID', 'cookie-consent-cmp'), self::INTEGRATIONS_SECTION);
-        add_settings_field(
-            'cookie-consent-cmp-enable-youtube',
-            __('YouTube blocking', 'cookie-consent-cmp'),
-            [$this, 'renderCheckboxField'],
-            self::PAGE_SLUG,
-            self::INTEGRATIONS_SECTION,
-            [
-                'name' => 'enable_youtube',
-                'label' => __('Block and replace YouTube embeds until marketing consent is granted.', 'cookie-consent-cmp'),
-            ]
         );
         add_settings_field(
             'cookie-consent-cmp-enable-floating',
@@ -132,24 +149,82 @@ final class AdminPage
         );
     }
 
+    private function addIntegrationFields(): void
+    {
+        $this->addTextField(
+            'gtm_id',
+            __('Google Tag Manager ID', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addTextField(
+            'clarity_project_id',
+            __('Microsoft Clarity project ID', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addTextField(
+            'hotjar_id',
+            __('Hotjar site ID', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addNumberField(
+            'hotjar_version',
+            __('Hotjar script version', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addTextField(
+            'meta_pixel_id',
+            __('Meta Pixel ID', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addTextField(
+            'linkedin_partner_id',
+            __('LinkedIn partner ID', 'cookie-consent-cmp'),
+            self::INTEGRATIONS_SECTION
+        );
+        $this->addYouTubeField();
+    }
+
+    private function addYouTubeField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-youtube',
+            __('YouTube blocking', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_youtube',
+                'label' => __(
+                    'Block and replace YouTube embeds until marketing consent is granted.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
+    }
+
     public function renderSettingsPage(): void
     {
         if (! current_user_can('manage_options')) {
             return;
         }
 
+        $compatibilityNotice = $this->compatibilityNotice();
+
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Cookie Consent CMP', 'cookie-consent-cmp'); ?></h1>
-            <p><?php esc_html_e('Configure the consent texts and vendor IDs used by the frontend Klaro banner.', 'cookie-consent-cmp'); ?></p>
+            <p>
+                <?php
+                esc_html_e(
+                    'Configure the consent texts and vendor IDs used by the frontend Klaro banner.',
+                    'cookie-consent-cmp'
+                );
+                ?>
+            </p>
 
-            <?php if (! $this->consentApiBridge->is_api_available()) : ?>
+            <?php if ($compatibilityNotice !== '') : ?>
                 <div class="notice notice-warning inline">
-                    <p><?php esc_html_e('WP Consent API was not detected. The CMP will still render, but the WordPress compatibility bridge will stay inactive until the API plugin is available.', 'cookie-consent-cmp'); ?></p>
-                </div>
-            <?php elseif ($this->consentApiBridge->has_consent_type_conflict()) : ?>
-                <div class="notice notice-warning inline">
-                    <p><?php esc_html_e('Another plugin already provides the WP Consent API consent type. Cookie Consent CMP preserves that value; verify that only one consent management platform controls the site.', 'cookie-consent-cmp'); ?></p>
+                    <p><?php printf('%s', esc_html($compatibilityNotice)); ?></p>
                 </div>
             <?php endif; ?>
 
@@ -162,6 +237,35 @@ final class AdminPage
             </form>
         </div>
         <?php
+    }
+
+    private function compatibilityNotice(): string
+    {
+        if (! $this->consentApiBridge->is_api_available()) {
+            return sprintf(
+                '%s %s %s',
+                __('WP Consent API was not detected.', 'cookie-consent-cmp'),
+                __(
+                    'The CMP will still render, but the WordPress compatibility bridge will stay inactive',
+                    'cookie-consent-cmp'
+                ),
+                __('until the API plugin is available.', 'cookie-consent-cmp')
+            );
+        }
+
+        if (! $this->consentApiBridge->has_consent_type_conflict()) {
+            return '';
+        }
+
+        return sprintf(
+            '%s %s %s',
+            __('Another plugin already provides the WP Consent API consent type.', 'cookie-consent-cmp'),
+            __(
+                'Cookie Consent CMP preserves that value; verify that only one consent management platform',
+                'cookie-consent-cmp'
+            ),
+            __('controls the site.', 'cookie-consent-cmp')
+        );
     }
 
     public function renderBannerSection(): void
@@ -225,7 +329,7 @@ final class AdminPage
             esc_attr($this->fieldId($name)),
             esc_attr(Options::OPTION_NAME),
             esc_attr($name),
-            checked(! empty($options[$name]), true, false),
+            checked((bool) $options[$name], true, false),
             esc_html($args['label'])
         );
     }
@@ -259,7 +363,16 @@ final class AdminPage
         echo '</select>';
         printf(
             '<p class="description">%s</p>',
-            esc_html(__('Klaro’s default applies no custom modal theme; the component stylesheet only positions and styles plugin controls.', 'cookie-consent-cmp'))
+            esc_html(
+                sprintf(
+                    '%s %s',
+                    __('Klaro’s default applies no custom modal theme;', 'cookie-consent-cmp'),
+                    __(
+                        'the component stylesheet only positions and styles plugin controls.',
+                        'cookie-consent-cmp'
+                    )
+                )
+            )
         );
     }
 
@@ -308,6 +421,6 @@ final class AdminPage
 
     private function fieldId(string $name): string
     {
-        return 'cookie-consent-cmp-'.str_replace('_', '-', $name);
+        return sprintf('cookie-consent-cmp-%s', str_replace('_', '-', $name));
     }
 }

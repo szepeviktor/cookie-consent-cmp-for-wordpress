@@ -26,8 +26,6 @@ declare(strict_types=1);
 
 namespace SzepeViktor\CookieConsentCmp;
 
-use Composer\Autoload\ClassLoader;
-
 use function plugin_basename;
 
 // Prevent direct execution.
@@ -35,7 +33,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-require __DIR__.'/vendor/autoload.php';
+require sprintf('%s/vendor/autoload.php', __DIR__);
 
 Config::init([
     'filePath' => __FILE__,
