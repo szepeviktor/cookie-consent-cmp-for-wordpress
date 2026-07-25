@@ -3,72 +3,24 @@
     left: calc(20px + env(safe-area-inset-left, 0px));
     bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     z-index: 980;
-    width: 64px;
-    height: 64px;
-    overflow: hidden;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: #1f2937;
-    color: transparent;
+    min-height: 44px;
+    padding: 8px 12px;
     cursor: pointer;
-    font-size: 0;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.cmp-floating-settings:hover {
-    transform: translateY(-1px);
-    background: #111827;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-}
-
-.cmp-floating-settings:focus-visible {
-    outline: 3px solid #93c5fd;
-    outline-offset: 3px;
-}
-
-.cmp-floating-settings::before {
-    content: '';
-    position: absolute;
-    top: 18px;
-    left: 18px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle at 72% 7%, #1f2937 0 4px, transparent 4.5px),
-        radial-gradient(circle at 91% 30%, #1f2937 0 4px, transparent 4.5px),
-        radial-gradient(circle at 24% 25%, #5b3a29 0 2px, transparent 2.5px),
-        radial-gradient(circle at 55% 35%, #5b3a29 0 2px, transparent 2.5px),
-        radial-gradient(circle at 38% 67%, #5b3a29 0 2px, transparent 2.5px),
-        radial-gradient(circle at 72% 65%, #5b3a29 0 2px, transparent 2.5px),
-        #d6a86a;
-    box-shadow:
-        inset -4px -4px 0 rgba(0, 0, 0, 0.08),
-        inset 3px 3px 0 rgba(255, 255, 255, 0.18);
 }
 
 .cmp-youtube-placeholder {
     position: relative;
     display: block;
     width: 100%;
+    max-width: 100%;
     min-height: 315px;
     overflow: hidden;
     padding: 0;
-    border: 0;
-    border-radius: 18px;
-    background: #1d1f24 center / cover no-repeat;
-    box-shadow: 0 18px 50px rgba(26, 21, 14, 0.16);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     cursor: pointer;
     text-align: left;
-}
-
-.cmp-youtube-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(14, 16, 21, 0.08), rgba(14, 16, 21, 0.78));
 }
 
 .cmp-youtube-placeholder-content {
@@ -76,7 +28,6 @@
     right: 24px;
     bottom: 24px;
     left: 24px;
-    z-index: 1;
     display: flex;
     align-items: end;
     justify-content: space-between;
@@ -87,38 +38,28 @@
     display: grid;
     gap: 8px;
     max-width: 420px;
-    color: #fff9f2;
-}
-
-.cmp-youtube-placeholder-copy strong {
-    font-size: 1.2rem;
 }
 
 .cmp-youtube-placeholder-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 160px;
     padding: 12px 18px;
-    border-radius: 999px;
-    background: #fff9f2;
-    color: #1d1f24;
-    font-weight: 700;
-    text-align: center;
 }
 
 @media (max-width: 700px) {
     .cmp-floating-settings {
         left: calc(16px + env(safe-area-inset-left, 0px));
         bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-        width: 58px;
-        height: 58px;
-    }
-
-    .cmp-floating-settings::before {
-        top: 15px;
-        left: 15px;
     }
 
     .cmp-youtube-placeholder-content {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .cmp-youtube-placeholder-button {
+        width: 100%;
     }
 }
