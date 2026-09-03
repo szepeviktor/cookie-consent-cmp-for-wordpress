@@ -2,7 +2,7 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cookie Consent CMP 1.1.0\n"
+"Project-Id-Version: Cookie Consent CMP 1.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\n"
 "Last-Translator: Viktor Szépe <viktor@szepe.net>\n"
 "Language-Team: Latvian <lv@li.org>\n"
