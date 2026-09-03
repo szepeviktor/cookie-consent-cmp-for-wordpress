@@ -449,6 +449,7 @@ final class AdminPage
             Options::MODAL_STYLE_LIGHT => __('Light', 'cookie-consent-cmp'),
             Options::MODAL_STYLE_DARK => __('Dark', 'cookie-consent-cmp'),
             Options::MODAL_STYLE_TWENTY_TWENTY_FIVE => __('Twenty Twenty-Five', 'cookie-consent-cmp'),
+            Options::MODAL_STYLE_COOKIENO => __('CookieNo', 'cookie-consent-cmp'),
         ];
 
         printf(

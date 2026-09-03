@@ -128,6 +128,9 @@ msgstr "Tumšs"
 msgid "Twenty Twenty-Five"
 msgstr "Twenty Twenty-Five"
 
+msgid "CookieNo"
+msgstr "CookieNo"
+
 msgid "Klaro’s default applies no custom modal theme;"
 msgstr "Klaro noklusējums nepiemēro pielāgotu modālā loga tēmu;"
 

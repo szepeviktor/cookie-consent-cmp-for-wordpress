@@ -128,6 +128,9 @@ msgstr "Темный"
 msgid "Twenty Twenty-Five"
 msgstr "Twenty Twenty-Five"
 
+msgid "CookieNo"
+msgstr "CookieNo"
+
 msgid "Klaro’s default applies no custom modal theme;"
 msgstr "Настройка Klaro по умолчанию не применяет пользовательскую тему модального окна;"
 
