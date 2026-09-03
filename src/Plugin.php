@@ -24,6 +24,7 @@ final class Plugin
         $options = new Options();
         $consentApiBridge = new ConsentApiBridge(Config::get('baseName'));
         $consentApiBridge->register();
+        (new Shortcodes())->register();
         (new Assets($options, $consentApiBridge))->register();
 
         if (is_admin() && ! wp_doing_ajax()) {

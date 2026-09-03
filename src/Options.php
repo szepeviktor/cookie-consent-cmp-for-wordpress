@@ -65,6 +65,8 @@ final class Options
             'enable_polylang' => 0,
             'enable_woocommerce' => 0,
             'enable_klaviyo' => 0,
+            'enable_woodmart' => 0,
+            'enable_wordfence' => 0,
             'enable_youtube' => 0,
             'enable_floating' => 1,
         ];
@@ -102,6 +104,8 @@ final class Options
             'enable_polylang' => (bool) ($input['enable_polylang'] ?? false) ? 1 : 0,
             'enable_woocommerce' => (bool) ($input['enable_woocommerce'] ?? false) ? 1 : 0,
             'enable_klaviyo' => (bool) ($input['enable_klaviyo'] ?? false) ? 1 : 0,
+            'enable_woodmart' => (bool) ($input['enable_woodmart'] ?? false) ? 1 : 0,
+            'enable_wordfence' => (bool) ($input['enable_wordfence'] ?? false) ? 1 : 0,
             'enable_youtube' => (bool) ($input['enable_youtube'] ?? false) ? 1 : 0,
             'enable_floating' => (bool) ($input['enable_floating'] ?? false) ? 1 : 0,
         ];

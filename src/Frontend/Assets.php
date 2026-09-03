@@ -181,8 +181,9 @@ final class Assets
     {
         $options = $this->options->all();
         $lang = strtolower(substr(determine_locale(), 0, 2));
+        $privacyPolicyUrl = esc_url_raw(get_privacy_policy_url());
 
-        return [
+        $config = [
             'version' => 1,
             'elementID' => 'klaro',
             'storageMethod' => 'cookie',
@@ -204,6 +205,12 @@ final class Assets
             ],
             'services' => $this->build_services($lang),
         ];
+
+        if ($privacyPolicyUrl !== '') {
+            $config['privacyPolicyUrl'] = $privacyPolicyUrl;
+        }
+
+        return $config;
     }
 
     /**
@@ -215,11 +222,11 @@ final class Assets
         return [
             'consentNotice' => [
                 'title' => (string) $options['notice_title'],
-                'description' => (string) $options['notice_description'],
+                'description' => $this->replacePrivacyPolicyShortcode((string) $options['notice_description']),
             ],
             'consentModal' => [
                 'title' => (string) $options['modal_title'],
-                'description' => (string) $options['modal_description'],
+                'description' => $this->replacePrivacyPolicyShortcode((string) $options['modal_description']),
             ],
             'purposes' => $this->buildPurposeTranslations(),
             'purposeItem' => [
@@ -234,6 +241,11 @@ final class Assets
             'close' => __('Close', 'cookie-consent-cmp'),
             'service' => $this->buildServiceTranslations(),
         ];
+    }
+
+    private function replacePrivacyPolicyShortcode(string $text): string
+    {
+        return str_replace('[privacy-policy]', esc_url(get_privacy_policy_url()), $text);
     }
 
     /**
@@ -325,6 +337,14 @@ final class Assets
 
         if ((bool) $options['enable_klaviyo']) {
             $services[] = $this->buildKlaviyoService($lang);
+        }
+
+        if ((bool) $options['enable_woodmart']) {
+            $services[] = $this->buildWoodMartService($lang);
+        }
+
+        if ((bool) $options['enable_wordfence']) {
+            $services[] = $this->buildWordfenceService($lang);
         }
 
         if ((bool) $options['enable_youtube']) {
@@ -819,11 +839,181 @@ final class Assets
                 $lang => [
                     'title' => __('Klaviyo', 'cookie-consent-cmp'),
                     'description' => __(
-                        'Klaviyo tracking is loaded by the installed Klaviyo WooCommerce plugin and supports email marketing attribution, forms, and WooCommerce customer activity tracking.',
+                        'Supports Klaviyo email marketing attribution, forms, and WooCommerce activity tracking.',
                         'cookie-consent-cmp'
                     ),
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildWoodMartService(string $lang): array
+    {
+        return [
+            'name' => 'woodmart',
+            'title' => __('WoodMart', 'cookie-consent-cmp'),
+            'purposes' => ['functional'],
+            'default' => true,
+            'required' => true,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => $this->buildWoodMartCookies(),
+            'wpConsentCategory' => 'functional',
+            'wpConsentCookies' => $this->buildWoodMartCookieInfo(),
+            'translations' => [
+                $lang => [
+                    'title' => __('WoodMart', 'cookie-consent-cmp'),
+                    'description' => __(
+                        'Keeps WoodMart shop preferences, wishlist, compare, product history, and popups working.',
+                        'cookie-consent-cmp'
+                    ),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function buildWoodMartCookies(): array
+    {
+        return [
+            'woodmart_recently_viewed_products',
+            'woodmart_wishlist_hash',
+            'woodmart_wishlist_count',
+            'woodmart_wishlist_products',
+            'wishlist_cleared_time',
+            'woodmart_compare_list',
+            'shop_per_page',
+            'shop_per_row',
+            'shop_view',
+            'woodmart_age_verify',
+            'woodmart_shown_pages',
+            '^woodmart_cookies_.*',
+            '^woodmart_tb_banner_.*',
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    private function buildWoodMartCookieInfo(): array
+    {
+        return [
+            $this->buildCookieInfo(
+                'woodmart_recently_viewed_products',
+                __('7 days', 'cookie-consent-cmp'),
+                __('Stores products recently viewed by the visitor.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woodmart_wishlist_hash',
+                __('Session', 'cookie-consent-cmp'),
+                __('Checks whether the visitor’s WoodMart wishlist has changed.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woodmart_wishlist_count',
+                __('Session', 'cookie-consent-cmp'),
+                __('Stores the number of products in the visitor’s WoodMart wishlist.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woodmart_wishlist_products',
+                __('Session', 'cookie-consent-cmp'),
+                __('Stores products added to the visitor’s WoodMart wishlist.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woodmart_compare_list',
+                __('Session', 'cookie-consent-cmp'),
+                __('Stores products added to the visitor’s WoodMart compare list.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'shop_view',
+                __('Session', 'cookie-consent-cmp'),
+                __('Remembers the visitor’s selected shop list or grid view.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woodmart_age_verify',
+                __('Session', 'cookie-consent-cmp'),
+                __('Remembers that the visitor passed the WoodMart age verification prompt.', 'cookie-consent-cmp')
+            ),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildWordfenceService(string $lang): array
+    {
+        return [
+            'name' => 'wordfence',
+            'title' => __('Wordfence', 'cookie-consent-cmp'),
+            'purposes' => ['functional'],
+            'default' => true,
+            'required' => true,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => $this->buildWordfenceCookies(),
+            'wpConsentCategory' => 'functional',
+            'wpConsentCookies' => $this->buildWordfenceCookieInfo(),
+            'translations' => [
+                $lang => [
+                    'title' => __('Wordfence', 'cookie-consent-cmp'),
+                    'description' => __(
+                        'Supports the Wordfence firewall, country blocking bypasses, login alerts, and plugin linking.',
+                        'cookie-consent-cmp'
+                    ),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function buildWordfenceCookies(): array
+    {
+        return [
+            '^wfwaf-authcookie-.*',
+            'wfCBLBypass',
+            '^wf_loginalerted_.*',
+            'wf-plugin-link-token',
+            'wordfence_verifiedHuman',
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    private function buildWordfenceCookieInfo(): array
+    {
+        return [
+            $this->buildCookieInfo(
+                'wfwaf-authcookie-*',
+                __('12 hours', 'cookie-consent-cmp'),
+                __('Allows the Wordfence firewall to identify logged-in users and their roles.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'wfCBLBypass',
+                __('1 year', 'cookie-consent-cmp'),
+                __('Stores a country blocking bypass granted by a hidden access URL.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'wf_loginalerted_*',
+                __('1 year', 'cookie-consent-cmp'),
+                __('Remembers that a Wordfence new-device login alert has already been sent.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'wf-plugin-link-token',
+                __('24 hours', 'cookie-consent-cmp'),
+                __('Tracks a Wordfence plugin license or account linking action.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'wordfence_verifiedHuman',
+                __('24 hours', 'cookie-consent-cmp'),
+                __('Remembers that Wordfence has verified the visitor as human.', 'cookie-consent-cmp')
+            ),
         ];
     }
 

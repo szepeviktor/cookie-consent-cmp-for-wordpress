@@ -16,6 +16,7 @@ use function current_user_can;
 use function do_settings_sections;
 use function esc_attr;
 use function esc_html;
+use function esc_html__;
 use function esc_html_e;
 use function esc_textarea;
 use function register_setting;
@@ -184,6 +185,8 @@ final class AdminPage
         $this->addPolylangField();
         $this->addWooCommerceField();
         $this->addKlaviyoField();
+        $this->addWoodMartField();
+        $this->addWordfenceField();
         $this->addYouTubeField();
     }
 
@@ -234,7 +237,43 @@ final class AdminPage
             [
                 'name' => 'enable_klaviyo',
                 'label' => __(
-                    'Show Klaviyo as a required marketing service when the Klaviyo WooCommerce plugin loads tracking outside CMP control.',
+                    'Show Klaviyo cookies when the Klaviyo WooCommerce plugin loads tracking outside CMP control.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
+    }
+
+    private function addWoodMartField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-woodmart',
+            __('WoodMart disclosure', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_woodmart',
+                'label' => __(
+                    'Show WoodMart cookies for wishlist, compare, product history, popups, and shop preferences.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
+    }
+
+    private function addWordfenceField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-wordfence',
+            __('Wordfence disclosure', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_wordfence',
+                'label' => __(
+                    'Show Wordfence security cookies for the firewall, access controls, login alerts, and linking.',
                     'cookie-consent-cmp'
                 ),
             ]
@@ -327,7 +366,17 @@ final class AdminPage
 
     public function renderBannerSection(): void
     {
-        esc_html_e('Set the text displayed in the consent notice and preferences dialog.', 'cookie-consent-cmp');
+        printf(
+            '%s %s',
+            esc_html__(
+                'Set the text displayed in the consent notice and preferences dialog.',
+                'cookie-consent-cmp'
+            ),
+            esc_html__(
+                'Use [privacy-policy] to insert WordPress’ configured Privacy Policy URL.',
+                'cookie-consent-cmp'
+            )
+        );
     }
 
     public function renderIntegrationsSection(): void
