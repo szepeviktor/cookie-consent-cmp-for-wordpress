@@ -11,7 +11,7 @@
  * Plugin Name:       Cookie Consent CMP
  * Plugin URI:        https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress
  * Description:       Klaro-based cookie consent banner with WP Consent API compatibility.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            Viktor Szépe
@@ -39,7 +39,7 @@ Config::init([
     'filePath' => __FILE__,
     'baseName' => plugin_basename(__FILE__),
     'slug' => 'cookie-consent-cmp',
-    'version' => '1.3.0',
+    'version' => '1.4.0',
 ]);
 
 add_action('plugins_loaded', [Plugin::class, 'boot'], 10, 0);
