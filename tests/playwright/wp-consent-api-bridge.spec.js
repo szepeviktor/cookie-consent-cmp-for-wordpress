@@ -13,7 +13,7 @@ async function openFixture(page, query = '') {
     await page.waitForFunction(() => window.bridgeFixture.categoryCalls.length >= 5);
 }
 
-test('synchronizes explicit category choices independently from service choices', async ({page}) => {
+test('synchronizes categories from configured service purposes', async ({page}) => {
     await openFixture(page);
 
     const state = await page.evaluate(() => ({
@@ -27,8 +27,8 @@ test('synchronizes explicit category choices independently from service choices'
 
     expect(state.categories).toEqual({
         functional: 'allow',
-        preferences: 'allow',
-        'statistics-anonymous': 'allow',
+        preferences: 'deny',
+        'statistics-anonymous': 'deny',
         statistics: 'allow',
         marketing: 'allow'
     });
@@ -49,8 +49,8 @@ test('ignores unsaved toggles and synchronizes after save', async ({page}) => {
     }));
 
     await page.evaluate(() => {
-        window.bridgeFixture.manager.consents.clarity = true;
-        window.bridgeFixture.manager.consents['wp-consent-category-statistics'] = false;
+        window.bridgeFixture.manager.consents.analytics = false;
+        window.bridgeFixture.manager.consents.clarity = false;
         window.bridgeFixture.manager.trigger('consents');
     });
     expect(await page.evaluate(() => window.bridgeFixture.categoryCalls.length))
@@ -66,13 +66,13 @@ test('ignores unsaved toggles and synchronizes after save', async ({page}) => {
         window.bridgeFixture.categoryCalls.slice(-5).map((call) => [call.category, call.value])
     ))).toEqual({
         functional: 'allow',
-        preferences: 'allow',
-        'statistics-anonymous': 'allow',
+        preferences: 'deny',
+        'statistics-anonymous': 'deny',
         statistics: 'deny',
         marketing: 'allow'
     });
     expect(await page.evaluate(() => window.bridgeFixture.serviceCalls.slice(-1)[0]))
-        .toEqual({service: 'clarity', consented: true});
+        .toEqual({service: 'analytics', consented: false});
 });
 
 test('dispatches on document and preserves an existing consent type', async ({page}) => {
@@ -129,8 +129,8 @@ test('integrates with the real WP Consent API 2.0.1 browser implementation', asy
 
     expect(initial.categories).toEqual({
         functional: true,
-        preferences: true,
-        anonymous: true,
+        preferences: false,
+        anonymous: false,
         statistics: true,
         marketing: true
     });

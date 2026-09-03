@@ -21,24 +21,31 @@
 }
 
 .klaro .cookie-notice:not(.cookie-modal-notice) {
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-width: none;
-    border-top: 1px solid #f4d6b0;
-    border-radius: 0;
-    box-shadow: 0 -12px 32px rgba(34, 24, 15, 0.12);
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    border-top: 1px solid #f4d6b0 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 -12px 32px rgba(34, 24, 15, 0.12) !important;
+}
+
+.klaro .cookie-notice:not(.cookie-modal-notice),
+.klaro .cookie-notice:not(.cookie-modal-notice) * {
+    box-sizing: border-box !important;
 }
 
 .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 16px 24px;
-    width: min(100%, 1180px);
-    margin: 0 auto;
-    padding: 18px 24px;
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 16px 24px !important;
+    width: min(100%, 1180px) !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: 18px 24px !important;
 }
 
 .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body p {
@@ -96,7 +103,17 @@
     box-shadow: 0 24px 70px rgba(34, 24, 15, 0.22);
 }
 
-.cky-consent-container.cky-banner-bottom {
+.klaro-consent-container,
+.klaro-consent-container * {
+    box-sizing: border-box !important;
+}
+
+.klaro-consent-container {
+    position: fixed !important;
+    z-index: 9999999 !important;
+}
+
+.klaro-consent-container.klaro-banner-bottom {
     right: 0 !important;
     bottom: 0 !important;
     left: 0 !important;
@@ -104,137 +121,187 @@
     max-width: none !important;
 }
 
-.cky-consent-container .cky-consent-bar {
+.klaro-consent-container .klaro-consent-bar {
     width: 100% !important;
     max-width: none !important;
-    padding: 18px 24px !important;
-    border: 0 !important;
-    border-top: 1px solid #f4d6b0 !important;
+    padding: 16.5px 24px !important;
+    border: 1px solid #d4d8df !important;
     border-radius: 0 !important;
     background: #fff !important;
     box-shadow: 0 -12px 32px rgba(34, 24, 15, 0.12) !important;
 }
 
-.cky-consent-container .cky-notice {
+.klaro-consent-container .klaro-notice {
     display: block !important;
-    width: min(100%, 1180px) !important;
-    margin: 0 auto !important;
-}
-
-.cky-consent-container .cky-title {
-    display: none !important;
-}
-
-.cky-consent-container .cky-notice-group {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) auto !important;
-    align-items: center !important;
-    gap: 16px 24px !important;
-}
-
-.cky-consent-container .cky-notice-des {
-    max-height: none !important;
-    overflow: visible !important;
-    color: #22180f !important;
-    font-size: 15px !important;
-    line-height: 1.55 !important;
-}
-
-.cky-consent-container .cky-notice-des p {
+    width: 100% !important;
     margin: 0 !important;
 }
 
-.cky-consent-container .cky-notice-des a {
+.klaro-consent-container .klaro-title {
+    display: none !important;
+}
+
+.klaro-consent-container .klaro-notice-group {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+}
+
+.klaro-consent-container .klaro-notice-des {
+    flex: 1 1 auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    color: #22180f !important;
+    font-size: 14px !important;
+    line-height: 24px !important;
+}
+
+.klaro-consent-container .klaro-notice-des p {
+    margin: 0 !important;
+}
+
+.klaro-consent-container .klaro-notice-des a {
     color: #ff8a00 !important;
     font-weight: 700 !important;
     text-decoration: underline !important;
     text-underline-offset: 2px !important;
 }
 
-.cky-consent-container .cky-notice-btn-wrapper {
+.klaro-consent-container .klaro-notice-btn-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 10px !important;
+    justify-content: center !important;
+    gap: 8px !important;
     width: auto !important;
-    margin: 0 !important;
+    margin: 0 0 0 15px !important;
     padding: 0 !important;
 }
 
-.cky-consent-container .cky-btn.cky-btn {
+.klaro-consent-container .klaro-btn.klaro-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     min-width: 138px !important;
-    min-height: 44px !important;
+    min-height: 46px !important;
     max-width: none !important;
     margin: 0 !important;
     order: 0 !important;
-    padding: 11px 18px !important;
-    border: 2px solid #ff8a00 !important;
-    border-radius: 0 !important;
+    padding: 8px 27px !important;
+    border: 3px solid #ff8a00 !important;
+    border-radius: 2px !important;
     background: #fff !important;
     color: #ff8a00 !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
     text-align: center !important;
+    white-space: nowrap !important;
 }
 
-.cky-consent-container .cky-btn.cky-btn-accept {
+.klaro-consent-container .klaro-btn.klaro-btn-accept {
     background: #ff8a00 !important;
     color: #fff !important;
 }
 
-.cky-consent-container .cky-notice-btn-wrapper .cky-btn.cky-btn-customize {
+.klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-customize {
     order: 1 !important;
 }
 
-.cky-consent-container .cky-notice-btn-wrapper .cky-btn.cky-btn-reject {
+.klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-reject {
     order: 2 !important;
 }
 
-.cky-consent-container .cky-notice-btn-wrapper .cky-btn.cky-btn-accept {
+.klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-accept {
     order: 3 !important;
 }
 
 @media (max-width: 900px) {
-    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body,
-    .cky-consent-container .cky-notice-group {
+    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body {
         grid-template-columns: 1fr !important;
     }
 
     .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-ok,
-    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-buttons,
-    .cky-consent-container .cky-notice-btn-wrapper {
+    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-buttons {
         width: 100% !important;
         justify-content: stretch !important;
     }
 
-    .klaro .cookie-notice:not(.cookie-modal-notice) button.cm-btn,
-    .cky-consent-container .cky-notice-btn-wrapper .cky-btn.cky-btn {
+    .klaro .cookie-notice:not(.cookie-modal-notice) button.cm-btn {
         flex: 1 1 0 !important;
         min-width: 0 !important;
     }
 }
 
 @media (max-width: 600px) {
-    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body,
-    .cky-consent-container .cky-consent-bar {
+    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body {
         padding: 16px !important;
     }
 
     .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-ok,
-    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-buttons,
-    .cky-consent-container .cky-notice-btn-wrapper {
+    .klaro .cookie-notice:not(.cookie-modal-notice) .cn-body .cn-buttons {
         flex-direction: column !important;
         align-items: stretch !important;
     }
 
-    .klaro .cookie-notice:not(.cookie-modal-notice) button.cm-btn,
-    .cky-consent-container .cky-notice-btn-wrapper .cky-btn.cky-btn {
+    .klaro .cookie-notice:not(.cookie-modal-notice) button.cm-btn {
         width: 100% !important;
         min-height: 44px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .klaro-consent-container .klaro-consent-bar {
+        padding: 16.5px 0 !important;
+    }
+
+    .klaro-consent-container .klaro-notice-group {
+        display: block !important;
+    }
+
+    .klaro-consent-container .klaro-notice-des {
+        max-height: 40vh !important;
+        overflow-y: scroll !important;
+        padding: 0 28px !important;
+    }
+
+    .klaro-consent-container .klaro-notice-btn-wrapper {
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin: 10px 0 0 !important;
+        padding: 0 28px !important;
+    }
+
+    .klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 42.2px !important;
+        padding: 8px !important;
+    }
+
+    .klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-accept {
+        order: 1 !important;
+    }
+
+    .klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-customize {
+        order: 2 !important;
+    }
+
+    .klaro-consent-container .klaro-notice-btn-wrapper .klaro-btn.klaro-btn-reject {
+        order: 3 !important;
+    }
+}
+
+@media (max-height: 480px) {
+    .klaro-consent-container {
+        max-height: 100vh !important;
+        overflow-y: scroll !important;
+    }
+
+    .klaro-consent-container .klaro-notice-des {
+        max-height: none !important;
+        overflow-y: visible !important;
     }
 }

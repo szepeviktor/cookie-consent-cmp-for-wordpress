@@ -362,30 +362,6 @@ final class Assets
     {
         return [
             $this->buildKlaroService($lang),
-            $this->build_category_service(
-                'preferences',
-                __('Preference storage', 'cookie-consent-cmp'),
-                __('Allows services that remember visitor preferences.', 'cookie-consent-cmp'),
-                $lang
-            ),
-            $this->build_category_service(
-                'statistics-anonymous',
-                __('Anonymous statistics', 'cookie-consent-cmp'),
-                __('Allows anonymous, first-party audience measurement.', 'cookie-consent-cmp'),
-                $lang
-            ),
-            $this->build_category_service(
-                'statistics',
-                __('Statistics', 'cookie-consent-cmp'),
-                __('Allows identifiable audience measurement and analytics.', 'cookie-consent-cmp'),
-                $lang
-            ),
-            $this->build_category_service(
-                'marketing',
-                __('Marketing', 'cookie-consent-cmp'),
-                __('Allows advertising measurement and visitor profiling.', 'cookie-consent-cmp'),
-                $lang
-            ),
         ];
     }
 
@@ -1125,31 +1101,4 @@ final class Assets
         return $cookieInfo;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    private function build_category_service(
-        string $category,
-        string $title,
-        string $description,
-        string $lang
-    ): array {
-        return [
-            'name' => sprintf('wp-consent-category-%s', $category),
-            'title' => $title,
-            'purposes' => [$category],
-            'default' => false,
-            'required' => false,
-            'optOut' => false,
-            'onlyOnce' => true,
-            'cookies' => [],
-            'wpConsentCategory' => $category,
-            'translations' => [
-                $lang => [
-                    'title' => $title,
-                    'description' => $description,
-                ],
-            ],
-        ];
-    }
 }

@@ -98,10 +98,26 @@
         return manager.config.services;
     }
 
+    function serviceCategory(service) {
+        if (typeof service.wpConsentCategory === 'string' && service.wpConsentCategory !== '') {
+            return service.wpConsentCategory;
+        }
+
+        if (service.purposes
+            && service.purposes.length > 0
+            && typeof service.purposes[0] === 'string'
+        ) {
+            return service.purposes[0];
+        }
+
+        return '';
+    }
+
     function hasCategoryConsent(manager, category) {
         var services = configuredServices(manager);
         var index;
         var service;
+        var consented = false;
 
         if (category === 'functional') {
             return true;
@@ -114,12 +130,16 @@
         for (index = 0; index < services.length; index++) {
             service = services[index];
 
-            if (service.wpConsentCategory === category) {
-                return !!(manager.consents && manager.consents[service.name]);
+            if (serviceCategory(service) !== category) {
+                continue;
+            }
+
+            if (service.required || !!(manager.consents && manager.consents[service.name])) {
+                consented = true;
             }
         }
 
-        return false;
+        return consented;
     }
 
     function syncServices(manager) {
