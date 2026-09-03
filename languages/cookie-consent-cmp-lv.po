@@ -1,0 +1,360 @@
+# Copyright (C) 2026 Viktor Szépe
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Cookie Consent CMP 1.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\n"
+"Last-Translator: Viktor Szépe <viktor@szepe.net>\n"
+"Language-Team: Latvian <lv@li.org>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-09-03 16:07+0000\n"
+"X-Generator: Codex\n"
+"X-Domain: cookie-consent-cmp\n"
+
+msgid "Cookie Consent CMP"
+msgstr "Cookie Consent CMP"
+
+msgid "https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress"
+msgstr "https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress"
+
+msgid "Klaro-based cookie consent banner with WP Consent API compatibility."
+msgstr "Uz Klaro balstīts sīkdatņu piekrišanas baneris ar WP Consent API saderību."
+
+msgid "Viktor Szépe"
+msgstr "Viktor Szépe"
+
+msgid "https://github.com/szepeviktor"
+msgstr "https://github.com/szepeviktor"
+
+msgid "Banner copy"
+msgstr "Banera teksts"
+
+msgid "Display"
+msgstr "Attēlošana"
+
+msgid "Integrations"
+msgstr "Integrācijas"
+
+msgid "Notice title"
+msgstr "Paziņojuma virsraksts"
+
+msgid "Notice description"
+msgstr "Paziņojuma apraksts"
+
+msgid "Modal title"
+msgstr "Modālā loga virsraksts"
+
+msgid "Modal description"
+msgstr "Modālā loga apraksts"
+
+msgid "Modal style"
+msgstr "Modālā loga stils"
+
+msgid "Floating privacy button"
+msgstr "Peldošā privātuma poga"
+
+msgid "Show a floating button that reopens the privacy settings."
+msgstr "Rādīt peldošu pogu, kas atkārtoti atver privātuma iestatījumus."
+
+msgid "Google Tag Manager ID"
+msgstr "Google Tag Manager ID"
+
+msgid "Microsoft Clarity project ID"
+msgstr "Microsoft Clarity projekta ID"
+
+msgid "Hotjar site ID"
+msgstr "Hotjar vietnes ID"
+
+msgid "Hotjar script version"
+msgstr "Hotjar skripta versija"
+
+msgid "Meta Pixel ID"
+msgstr "Meta Pixel ID"
+
+msgid "LinkedIn partner ID"
+msgstr "LinkedIn partnera ID"
+
+msgid "YouTube blocking"
+msgstr "YouTube bloķēšana"
+
+msgid "Block and replace YouTube embeds until marketing consent is granted."
+msgstr "Bloķēt un aizstāt YouTube iegultos elementus, līdz tiek dota mārketinga piekrišana."
+
+msgid "Configure the consent texts and vendor IDs used by the frontend Klaro banner."
+msgstr "Konfigurējiet piekrišanas tekstus un pakalpojumu sniedzēju ID, ko izmanto priekšpuses Klaro baneris."
+
+msgid "WP Consent API was not detected."
+msgstr "WP Consent API netika atrasts."
+
+msgid "The CMP will still render, but the WordPress compatibility bridge will stay inactive"
+msgstr "CMP joprojām tiks attēlots, bet WordPress saderības tilts paliks neaktīvs"
+
+msgid "until the API plugin is available."
+msgstr "līdz API spraudnis būs pieejams."
+
+msgid "Another plugin already provides the WP Consent API consent type."
+msgstr "Cits spraudnis jau nodrošina WP Consent API piekrišanas veidu."
+
+msgid "Cookie Consent CMP preserves that value; verify that only one consent management platform"
+msgstr "Cookie Consent CMP saglabā šo vērtību; pārbaudiet, vai tikai viena piekrišanas pārvaldības platforma"
+
+msgid "controls the site."
+msgstr "kontrolē vietni."
+
+msgid "Set the text displayed in the consent notice and preferences dialog."
+msgstr "Iestatiet tekstu, kas tiek rādīts piekrišanas paziņojumā un preferenču dialogā."
+
+msgid "Enter only the services that this site uses."
+msgstr "Ievadiet tikai tos pakalpojumus, ko šī vietne izmanto."
+
+msgid "Control how visitors can access their privacy settings."
+msgstr "Kontrolējiet, kā apmeklētāji var piekļūt saviem privātuma iestatījumiem."
+
+msgid "Klaro’s default"
+msgstr "Klaro noklusējuma"
+
+msgid "Viktor’s default"
+msgstr "Viktor noklusējuma"
+
+msgid "Light"
+msgstr "Gaišs"
+
+msgid "Dark"
+msgstr "Tumšs"
+
+msgid "Twenty Twenty-Five"
+msgstr "Twenty Twenty-Five"
+
+msgid "Klaro’s default applies no custom modal theme;"
+msgstr "Klaro noklusējums nepiemēro pielāgotu modālā loga tēmu;"
+
+msgid "the component stylesheet only positions and styles plugin controls."
+msgstr "komponentu stilu lapa tikai novieto un noformē spraudņa vadīklas."
+
+msgid "service"
+msgstr "pakalpojums"
+
+msgid "services"
+msgstr "pakalpojumi"
+
+msgid "OK"
+msgstr "Labi"
+
+msgid "Save"
+msgstr "Saglabāt"
+
+msgid "Accept all"
+msgstr "Pieņemt visu"
+
+msgid "Decline all"
+msgstr "Noraidīt visu"
+
+msgid "Decline"
+msgstr "Noraidīt"
+
+msgid "Close"
+msgstr "Aizvērt"
+
+msgid "Functional"
+msgstr "Funkcionālās"
+
+msgid "Preferences"
+msgstr "Preferences"
+
+msgid "Anonymous statistics"
+msgstr "Anonīmā statistika"
+
+msgid "Statistics"
+msgstr "Statistika"
+
+msgid "Marketing"
+msgstr "Mārketings"
+
+msgid "Enable or disable all services"
+msgstr "Iespējot vai atspējot visus pakalpojumus"
+
+msgid "Use this switch to change all optional services at once."
+msgstr "Izmantojiet šo slēdzi, lai vienlaikus mainītu visus izvēles pakalpojumus."
+
+msgid "(opt-out)"
+msgstr "(atteikšanās)"
+
+msgid "This service loads by default, but can be disabled later."
+msgstr "Šis pakalpojums tiek ielādēts pēc noklusējuma, bet vēlāk to var atspējot."
+
+msgid "(required)"
+msgstr "(obligāts)"
+
+msgid "This service is required for the site to function."
+msgstr "Šis pakalpojums ir nepieciešams vietnes darbībai."
+
+msgid "Purposes"
+msgstr "Nolūki"
+
+msgid "Purpose"
+msgstr "Nolūks"
+
+msgid "Preference storage"
+msgstr "Preferenču glabāšana"
+
+msgid "Allows services that remember visitor preferences."
+msgstr "Atļauj pakalpojumus, kas atceras apmeklētāja preferences."
+
+msgid "Allows anonymous, first-party audience measurement."
+msgstr "Atļauj anonīmu pirmās puses auditorijas mērīšanu."
+
+msgid "Allows identifiable audience measurement and analytics."
+msgstr "Atļauj identificējamu auditorijas mērīšanu un analītiku."
+
+msgid "Allows advertising measurement and visitor profiling."
+msgstr "Atļauj reklāmas mērīšanu un apmeklētāju profilēšanu."
+
+msgid "Cookie consent settings"
+msgstr "Sīkdatņu piekrišanas iestatījumi"
+
+msgid "365 days"
+msgstr "365 dienas"
+
+msgid "Stores the visitor’s consent choices."
+msgstr "Saglabā apmeklētāja piekrišanas izvēles."
+
+msgid "Stores the visitor’s consent choice."
+msgstr "Saglabā apmeklētāja piekrišanas izvēli."
+
+msgid "Google Tag Manager"
+msgstr "Google Tag Manager"
+
+msgid "2 years"
+msgstr "2 gadi"
+
+msgid "Distinguishes visitors for analytics reporting."
+msgstr "Atšķir apmeklētājus analītikas pārskatiem."
+
+msgid "24 hours"
+msgstr "24 stundas"
+
+msgid "Distinguishes visitors for daily analytics reporting."
+msgstr "Atšķir apmeklētājus ikdienas analītikas pārskatiem."
+
+msgid "Loads analytics tags managed through Google Tag Manager."
+msgstr "Ielādē analītikas tagus, kas tiek pārvaldīti ar Google Tag Manager."
+
+msgid "Microsoft Clarity"
+msgstr "Microsoft Clarity"
+
+msgid "1 year"
+msgstr "1 gads"
+
+msgid "Persists the Clarity visitor identifier and preferences."
+msgstr "Saglabā Clarity apmeklētāja identifikatoru un preferences."
+
+msgid "1 day"
+msgstr "1 diena"
+
+msgid "Groups Clarity page views into a recording session."
+msgstr "Grupē Clarity lapu skatījumus ierakstīšanas sesijā."
+
+msgid "Measures how visitors use the site through session analytics."
+msgstr "Mēra, kā apmeklētāji izmanto vietni, izmantojot sesiju analītiku."
+
+msgid "Hotjar"
+msgstr "Hotjar"
+
+msgid "Measures visitor behavior and collects usability feedback."
+msgstr "Mēra apmeklētāju uzvedību un apkopo lietojamības atsauksmes."
+
+msgid "Prevents a dismissed Hotjar survey invitation from reappearing."
+msgstr "Neļauj atkārtoti parādīties noraidītam Hotjar aptaujas uzaicinājumam."
+
+msgid "Prevents a completed Hotjar poll from reappearing."
+msgstr "Neļauj atkārtoti parādīties pabeigtai Hotjar aptaujai."
+
+msgid "Keeps a minimized Hotjar poll minimized."
+msgstr "Saglabā minimizētu Hotjar aptauju minimizētā stāvoklī."
+
+msgid "Prevents repeated display of Hotjar feedback messaging."
+msgstr "Novērš atkārtotu Hotjar atsauksmju ziņojumu rādīšanu."
+
+msgid "Meta Pixel"
+msgstr "Meta Pixel"
+
+msgid "90 days"
+msgstr "90 dienas"
+
+msgid "Identifies browsers for Meta advertising measurement."
+msgstr "Identificē pārlūkprogrammas Meta reklāmas mērīšanai."
+
+msgid "Stores the Meta advertising click identifier."
+msgstr "Saglabā Meta reklāmas klikšķa identifikatoru."
+
+msgid "Measures advertising performance and visitor actions for Meta."
+msgstr "Mēra reklāmas veiktspēju un apmeklētāju darbības Meta vajadzībām."
+
+msgid "LinkedIn Insight Tag"
+msgstr "LinkedIn Insight Tag"
+
+msgid "30 days"
+msgstr "30 dienas"
+
+msgid "Stores the LinkedIn advertising click identifier."
+msgstr "Saglabā LinkedIn reklāmas klikšķa identifikatoru."
+
+msgid "7 days"
+msgstr "7 dienas"
+
+msgid "Supports LinkedIn conversion attribution."
+msgstr "Atbalsta LinkedIn konversiju attiecināšanu."
+
+msgid "Measures LinkedIn campaign performance and website conversions."
+msgstr "Mēra LinkedIn kampaņu veiktspēju un vietnes konversijas."
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "Loads embedded videos provided by YouTube."
+msgstr "Ielādē YouTube nodrošinātos iegultos video."
+
+msgid "180 days"
+msgstr "180 dienas"
+
+msgid "Measures bandwidth and player interface selection."
+msgstr "Mēra joslas platumu un atskaņotāja saskarnes izvēli."
+
+msgid "Stores the visitor’s YouTube privacy state."
+msgstr "Saglabā apmeklētāja YouTube privātuma stāvokli."
+
+msgid "Session"
+msgstr "Sesija"
+
+msgid "Maintains YouTube video-view session data."
+msgstr "Uztur YouTube video skatīšanās sesijas datus."
+
+msgid "8 months"
+msgstr "8 mēneši"
+
+msgid "Stores YouTube playback and display preferences."
+msgstr "Saglabā YouTube atskaņošanas un attēlošanas preferences."
+
+msgid "Varies"
+msgstr "Atšķiras"
+
+msgid "Configured consent service."
+msgstr "Konfigurēts piekrišanas pakalpojums."
+
+msgid "Privacy settings"
+msgstr "Privātuma iestatījumi"
+
+msgid "We use cookies for required functionality, statistics, and marketing."
+msgstr "Mēs izmantojam sīkdatnes nepieciešamai funkcionalitātei, statistikai un mārketingam."
+
+msgid "You can update your choices at any time."
+msgstr "Savas izvēles varat atjaunināt jebkurā laikā."
+
+msgid "Privacy preferences"
+msgstr "Privātuma preferences"
+
+msgid "Choose which categories of services may load on this site."
+msgstr "Izvēlieties, kuru kategoriju pakalpojumi drīkst ielādēties šajā vietnē."

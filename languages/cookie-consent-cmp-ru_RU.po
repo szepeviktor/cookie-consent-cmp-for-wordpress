@@ -1,0 +1,360 @@
+# Copyright (C) 2026 Viktor Szépe
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Cookie Consent CMP 1.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress/issues\n"
+"Last-Translator: Viktor Szépe <viktor@szepe.net>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-09-03 16:07+0000\n"
+"X-Generator: Codex\n"
+"X-Domain: cookie-consent-cmp\n"
+
+msgid "Cookie Consent CMP"
+msgstr "Cookie Consent CMP"
+
+msgid "https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress"
+msgstr "https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress"
+
+msgid "Klaro-based cookie consent banner with WP Consent API compatibility."
+msgstr "Баннер согласия на использование файлов cookie на базе Klaro с совместимостью с WP Consent API."
+
+msgid "Viktor Szépe"
+msgstr "Viktor Szépe"
+
+msgid "https://github.com/szepeviktor"
+msgstr "https://github.com/szepeviktor"
+
+msgid "Banner copy"
+msgstr "Текст баннера"
+
+msgid "Display"
+msgstr "Отображение"
+
+msgid "Integrations"
+msgstr "Интеграции"
+
+msgid "Notice title"
+msgstr "Заголовок уведомления"
+
+msgid "Notice description"
+msgstr "Описание уведомления"
+
+msgid "Modal title"
+msgstr "Заголовок модального окна"
+
+msgid "Modal description"
+msgstr "Описание модального окна"
+
+msgid "Modal style"
+msgstr "Стиль модального окна"
+
+msgid "Floating privacy button"
+msgstr "Плавающая кнопка приватности"
+
+msgid "Show a floating button that reopens the privacy settings."
+msgstr "Показывать плавающую кнопку, которая повторно открывает настройки приватности."
+
+msgid "Google Tag Manager ID"
+msgstr "ID Google Tag Manager"
+
+msgid "Microsoft Clarity project ID"
+msgstr "ID проекта Microsoft Clarity"
+
+msgid "Hotjar site ID"
+msgstr "ID сайта Hotjar"
+
+msgid "Hotjar script version"
+msgstr "Версия скрипта Hotjar"
+
+msgid "Meta Pixel ID"
+msgstr "ID Meta Pixel"
+
+msgid "LinkedIn partner ID"
+msgstr "ID партнера LinkedIn"
+
+msgid "YouTube blocking"
+msgstr "Блокировка YouTube"
+
+msgid "Block and replace YouTube embeds until marketing consent is granted."
+msgstr "Блокировать и заменять встраивания YouTube, пока не получено согласие на маркетинг."
+
+msgid "Configure the consent texts and vendor IDs used by the frontend Klaro banner."
+msgstr "Настройте тексты согласия и ID поставщиков, используемые фронтенд-баннером Klaro."
+
+msgid "WP Consent API was not detected."
+msgstr "WP Consent API не обнаружен."
+
+msgid "The CMP will still render, but the WordPress compatibility bridge will stay inactive"
+msgstr "CMP все равно будет отображаться, но мост совместимости WordPress останется неактивным"
+
+msgid "until the API plugin is available."
+msgstr "пока плагин API не станет доступен."
+
+msgid "Another plugin already provides the WP Consent API consent type."
+msgstr "Другой плагин уже предоставляет тип согласия WP Consent API."
+
+msgid "Cookie Consent CMP preserves that value; verify that only one consent management platform"
+msgstr "Cookie Consent CMP сохраняет это значение; проверьте, что только одна платформа управления согласием"
+
+msgid "controls the site."
+msgstr "управляет сайтом."
+
+msgid "Set the text displayed in the consent notice and preferences dialog."
+msgstr "Задайте текст, отображаемый в уведомлении о согласии и диалоге предпочтений."
+
+msgid "Enter only the services that this site uses."
+msgstr "Укажите только те сервисы, которые использует этот сайт."
+
+msgid "Control how visitors can access their privacy settings."
+msgstr "Управляйте тем, как посетители получают доступ к настройкам приватности."
+
+msgid "Klaro’s default"
+msgstr "По умолчанию Klaro"
+
+msgid "Viktor’s default"
+msgstr "По умолчанию Viktor"
+
+msgid "Light"
+msgstr "Светлый"
+
+msgid "Dark"
+msgstr "Темный"
+
+msgid "Twenty Twenty-Five"
+msgstr "Twenty Twenty-Five"
+
+msgid "Klaro’s default applies no custom modal theme;"
+msgstr "Настройка Klaro по умолчанию не применяет пользовательскую тему модального окна;"
+
+msgid "the component stylesheet only positions and styles plugin controls."
+msgstr "таблица стилей компонентов только размещает и оформляет элементы управления плагина."
+
+msgid "service"
+msgstr "сервис"
+
+msgid "services"
+msgstr "сервисы"
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Accept all"
+msgstr "Принять все"
+
+msgid "Decline all"
+msgstr "Отклонить все"
+
+msgid "Decline"
+msgstr "Отклонить"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Functional"
+msgstr "Функциональные"
+
+msgid "Preferences"
+msgstr "Предпочтения"
+
+msgid "Anonymous statistics"
+msgstr "Анонимная статистика"
+
+msgid "Statistics"
+msgstr "Статистика"
+
+msgid "Marketing"
+msgstr "Маркетинг"
+
+msgid "Enable or disable all services"
+msgstr "Включить или отключить все сервисы"
+
+msgid "Use this switch to change all optional services at once."
+msgstr "Используйте этот переключатель, чтобы изменить все необязательные сервисы сразу."
+
+msgid "(opt-out)"
+msgstr "(отказ)"
+
+msgid "This service loads by default, but can be disabled later."
+msgstr "Этот сервис загружается по умолчанию, но позже его можно отключить."
+
+msgid "(required)"
+msgstr "(обязательно)"
+
+msgid "This service is required for the site to function."
+msgstr "Этот сервис необходим для работы сайта."
+
+msgid "Purposes"
+msgstr "Цели"
+
+msgid "Purpose"
+msgstr "Цель"
+
+msgid "Preference storage"
+msgstr "Хранение предпочтений"
+
+msgid "Allows services that remember visitor preferences."
+msgstr "Разрешает сервисы, которые запоминают предпочтения посетителя."
+
+msgid "Allows anonymous, first-party audience measurement."
+msgstr "Разрешает анонимное измерение аудитории первой стороной."
+
+msgid "Allows identifiable audience measurement and analytics."
+msgstr "Разрешает идентифицируемое измерение аудитории и аналитику."
+
+msgid "Allows advertising measurement and visitor profiling."
+msgstr "Разрешает измерение рекламы и профилирование посетителей."
+
+msgid "Cookie consent settings"
+msgstr "Настройки согласия на cookie"
+
+msgid "365 days"
+msgstr "365 дней"
+
+msgid "Stores the visitor’s consent choices."
+msgstr "Сохраняет варианты согласия посетителя."
+
+msgid "Stores the visitor’s consent choice."
+msgstr "Сохраняет выбор согласия посетителя."
+
+msgid "Google Tag Manager"
+msgstr "Google Tag Manager"
+
+msgid "2 years"
+msgstr "2 года"
+
+msgid "Distinguishes visitors for analytics reporting."
+msgstr "Различает посетителей для аналитической отчетности."
+
+msgid "24 hours"
+msgstr "24 часа"
+
+msgid "Distinguishes visitors for daily analytics reporting."
+msgstr "Различает посетителей для ежедневной аналитической отчетности."
+
+msgid "Loads analytics tags managed through Google Tag Manager."
+msgstr "Загружает аналитические теги, управляемые через Google Tag Manager."
+
+msgid "Microsoft Clarity"
+msgstr "Microsoft Clarity"
+
+msgid "1 year"
+msgstr "1 год"
+
+msgid "Persists the Clarity visitor identifier and preferences."
+msgstr "Сохраняет идентификатор посетителя Clarity и предпочтения."
+
+msgid "1 day"
+msgstr "1 день"
+
+msgid "Groups Clarity page views into a recording session."
+msgstr "Группирует просмотры страниц Clarity в сеанс записи."
+
+msgid "Measures how visitors use the site through session analytics."
+msgstr "Измеряет, как посетители используют сайт, с помощью сеансовой аналитики."
+
+msgid "Hotjar"
+msgstr "Hotjar"
+
+msgid "Measures visitor behavior and collects usability feedback."
+msgstr "Измеряет поведение посетителей и собирает отзывы об удобстве использования."
+
+msgid "Prevents a dismissed Hotjar survey invitation from reappearing."
+msgstr "Предотвращает повторное появление отклоненного приглашения к опросу Hotjar."
+
+msgid "Prevents a completed Hotjar poll from reappearing."
+msgstr "Предотвращает повторное появление завершенного опроса Hotjar."
+
+msgid "Keeps a minimized Hotjar poll minimized."
+msgstr "Сохраняет опрос Hotjar в свернутом состоянии."
+
+msgid "Prevents repeated display of Hotjar feedback messaging."
+msgstr "Предотвращает повторный показ сообщений обратной связи Hotjar."
+
+msgid "Meta Pixel"
+msgstr "Meta Pixel"
+
+msgid "90 days"
+msgstr "90 дней"
+
+msgid "Identifies browsers for Meta advertising measurement."
+msgstr "Идентифицирует браузеры для измерения рекламы Meta."
+
+msgid "Stores the Meta advertising click identifier."
+msgstr "Сохраняет идентификатор рекламного клика Meta."
+
+msgid "Measures advertising performance and visitor actions for Meta."
+msgstr "Измеряет эффективность рекламы и действия посетителей для Meta."
+
+msgid "LinkedIn Insight Tag"
+msgstr "LinkedIn Insight Tag"
+
+msgid "30 days"
+msgstr "30 дней"
+
+msgid "Stores the LinkedIn advertising click identifier."
+msgstr "Сохраняет идентификатор рекламного клика LinkedIn."
+
+msgid "7 days"
+msgstr "7 дней"
+
+msgid "Supports LinkedIn conversion attribution."
+msgstr "Поддерживает атрибуцию конверсий LinkedIn."
+
+msgid "Measures LinkedIn campaign performance and website conversions."
+msgstr "Измеряет эффективность кампаний LinkedIn и конверсии на сайте."
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "Loads embedded videos provided by YouTube."
+msgstr "Загружает встроенные видео, предоставленные YouTube."
+
+msgid "180 days"
+msgstr "180 дней"
+
+msgid "Measures bandwidth and player interface selection."
+msgstr "Измеряет пропускную способность и выбор интерфейса проигрывателя."
+
+msgid "Stores the visitor’s YouTube privacy state."
+msgstr "Сохраняет состояние приватности посетителя для YouTube."
+
+msgid "Session"
+msgstr "Сеанс"
+
+msgid "Maintains YouTube video-view session data."
+msgstr "Поддерживает данные сеанса просмотра видео YouTube."
+
+msgid "8 months"
+msgstr "8 месяцев"
+
+msgid "Stores YouTube playback and display preferences."
+msgstr "Сохраняет предпочтения воспроизведения и отображения YouTube."
+
+msgid "Varies"
+msgstr "Зависит"
+
+msgid "Configured consent service."
+msgstr "Настроенный сервис согласия."
+
+msgid "Privacy settings"
+msgstr "Настройки приватности"
+
+msgid "We use cookies for required functionality, statistics, and marketing."
+msgstr "Мы используем файлы cookie для необходимой функциональности, статистики и маркетинга."
+
+msgid "You can update your choices at any time."
+msgstr "Вы можете изменить свой выбор в любое время."
+
+msgid "Privacy preferences"
+msgstr "Предпочтения приватности"
+
+msgid "Choose which categories of services may load on this site."
+msgstr "Выберите, какие категории сервисов могут загружаться на этом сайте."
