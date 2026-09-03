@@ -71,6 +71,10 @@
                     var consent = isServiceActive(manager, serviceName);
 
                     vendors[serviceName].forEach(function (vendor) {
+                        if (typeof vendor.syncManagerState === 'function') {
+                            vendor.syncManagerState(manager);
+                        }
+
                         vendor.syncConsent(consent);
                     });
                 });
@@ -83,6 +87,11 @@
 
         return {
             serviceName: serviceName,
+            syncManagerState: function (manager) {
+                if (typeof hooks.syncManagerState === 'function') {
+                    hooks.syncManagerState(manager);
+                }
+            },
             syncConsent: function (consent) {
                 if (consent) {
                     if (!hasConsent) {
@@ -186,11 +195,22 @@
         return required || (consent && confirmed);
     }
 
+    function buildGoogleConsentState(analyticsConsent, marketingConsent) {
+        return {
+            analytics_storage: analyticsConsent ? 'granted' : 'denied',
+            ad_storage: marketingConsent ? 'granted' : 'denied',
+            ad_user_data: marketingConsent ? 'granted' : 'denied',
+            ad_personalization: marketingConsent ? 'granted' : 'denied'
+        };
+    }
+
     function createGtmVendor(options) {
         var serviceName = options.serviceName || SERVICE_NAMES.gtm;
         var gtmId = options.gtmId;
         var dataLayerName = options.dataLayerName || 'dataLayer';
         var hasLoaded = false;
+        var analyticsConsent = false;
+        var marketingConsent = false;
 
         function ensureRuntime() {
             window[dataLayerName] = window[dataLayerName] || [];
@@ -202,18 +222,13 @@
             }
         }
 
-        function buildConsentState(consent) {
-            return {
-                analytics_storage: consent ? 'granted' : 'denied',
-                ad_storage: 'denied',
-                ad_user_data: 'denied',
-                ad_personalization: 'denied'
-            };
-        }
-
-        function updateConsent(consent) {
+        function updateConsent() {
             ensureRuntime();
-            window.gtag('consent', 'update', buildConsentState(consent));
+            window.gtag(
+                'consent',
+                'update',
+                buildGoogleConsentState(analyticsConsent, marketingConsent)
+            );
         }
 
         function load() {
@@ -225,7 +240,7 @@
             }
 
             ensureRuntime();
-            window.gtag('consent', 'default', buildConsentState(false));
+            window.gtag('consent', 'default', buildGoogleConsentState(false, false));
             window[dataLayerName].push({
                 'gtm.start': new Date().getTime(),
                 event: 'gtm.js'
@@ -247,15 +262,23 @@
         }
 
         return createConsentAwareVendor(serviceName, {
+            syncManagerState: function (manager) {
+                marketingConsent = isServiceActive(manager, 'marketing');
+                if (hasLoaded) {
+                    updateConsent();
+                }
+            },
             grant: function () {
+                analyticsConsent = true;
                 load();
                 if (hasLoaded) {
-                    updateConsent(true);
+                    updateConsent();
                 }
             },
             revoke: function () {
+                analyticsConsent = false;
                 if (hasLoaded) {
-                    updateConsent(false);
+                    updateConsent();
                 }
             }
         });
