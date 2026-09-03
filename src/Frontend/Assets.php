@@ -310,6 +310,19 @@ final class Assets
             $services[] = $this->buildLinkedInService($lang);
         }
 
+        if ((bool) $options['enable_polylang']) {
+            $polylangService = $this->buildPolylangService($lang);
+
+            if ($polylangService !== null) {
+                $services[] = $polylangService;
+            }
+        }
+
+        if ((bool) $options['enable_woocommerce']) {
+            $services[] = $this->buildWooCommerceFunctionalService($lang);
+            $services[] = $this->buildWooCommerceAttributionService($lang);
+        }
+
         if ((bool) $options['enable_klaviyo']) {
             $services[] = $this->buildKlaviyoService($lang);
         }
@@ -560,6 +573,222 @@ final class Assets
             __('Measures LinkedIn campaign performance and website conversions.', 'cookie-consent-cmp'),
             $lang
         );
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function buildPolylangService(string $lang): ?array
+    {
+        $cookieName = defined('PLL_COOKIE') ? constant('PLL_COOKIE') : 'pll_language';
+
+        if (! is_string($cookieName) || $cookieName === '') {
+            return null;
+        }
+
+        return [
+            'name' => 'polylang',
+            'title' => __('Polylang', 'cookie-consent-cmp'),
+            'purposes' => ['preferences'],
+            'default' => true,
+            'required' => true,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => [$cookieName],
+            'wpConsentCategory' => 'preferences',
+            'wpConsentCookies' => [
+                $this->buildCookieInfo(
+                    $cookieName,
+                    __('1 year', 'cookie-consent-cmp'),
+                    __(
+                        'Stores the visitor’s last browsed language for Polylang and Polylang for WooCommerce.',
+                        'cookie-consent-cmp'
+                    )
+                ),
+            ],
+            'translations' => [
+                $lang => [
+                    'title' => __('Polylang', 'cookie-consent-cmp'),
+                    'description' => __(
+                        'Remembers the selected language for multilingual content and translated WooCommerce flows.',
+                        'cookie-consent-cmp'
+                    ),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildWooCommerceFunctionalService(string $lang): array
+    {
+        return [
+            'name' => 'woocommerce',
+            'title' => __('WooCommerce', 'cookie-consent-cmp'),
+            'purposes' => ['functional'],
+            'default' => true,
+            'required' => true,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => $this->buildWooCommerceFunctionalCookies(),
+            'wpConsentCategory' => 'functional',
+            'wpConsentCookies' => $this->buildWooCommerceFunctionalCookieInfo(),
+            'translations' => [
+                $lang => [
+                    'title' => __('WooCommerce', 'cookie-consent-cmp'),
+                    'description' => __(
+                        'Keeps the shopping cart, checkout, customer session, and store notices working.',
+                        'cookie-consent-cmp'
+                    ),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function buildWooCommerceFunctionalCookies(): array
+    {
+        return [
+            'woocommerce_cart_hash',
+            'woocommerce_items_in_cart',
+            '^wp_woocommerce_session_.*',
+            '^wc_cart_hash_.*',
+            '^wc_fragments_.*',
+            'wc_cart_created',
+            'woocommerce_recently_viewed',
+            '^store_notice.*',
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    private function buildWooCommerceFunctionalCookieInfo(): array
+    {
+        return [
+            $this->buildCookieInfo(
+                'woocommerce_cart_hash',
+                __('Session', 'cookie-consent-cmp'),
+                __('Helps WooCommerce detect cart changes.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woocommerce_items_in_cart',
+                __('Session', 'cookie-consent-cmp'),
+                __('Helps WooCommerce keep cart data synchronized.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'wp_woocommerce_session_*',
+                __('2 days', 'cookie-consent-cmp'),
+                __('Stores a unique customer session identifier for cart and checkout data.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'woocommerce_recently_viewed',
+                __('Session', 'cookie-consent-cmp'),
+                __('Stores products viewed by the visitor.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'store_notice*',
+                __('Session', 'cookie-consent-cmp'),
+                __('Remembers dismissed WooCommerce store notices.', 'cookie-consent-cmp')
+            ),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildWooCommerceAttributionService(string $lang): array
+    {
+        return $this->buildOptionalService(
+            'woocommerce-attribution',
+            __('WooCommerce source attribution', 'cookie-consent-cmp'),
+            'statistics',
+            $this->buildWooCommerceAttributionCookies(),
+            $this->buildWooCommerceAttributionCookieInfo(),
+            __(
+                'Stores first-party source attribution data for WooCommerce order reporting.',
+                'cookie-consent-cmp'
+            ),
+            $lang
+        );
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function buildWooCommerceAttributionCookies(): array
+    {
+        return [
+            'sbjs_current',
+            'sbjs_current_add',
+            'sbjs_first',
+            'sbjs_first_add',
+            'sbjs_migrations',
+            'sbjs_session',
+            'sbjs_udata',
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    private function buildWooCommerceAttributionCookieInfo(): array
+    {
+        return [
+            $this->buildCookieInfo(
+                'sbjs_current',
+                __('6 months', 'cookie-consent-cmp'),
+                __(
+                    'Stores the visitor’s current traffic source for WooCommerce order attribution.',
+                    'cookie-consent-cmp'
+                )
+            ),
+            $this->buildCookieInfo(
+                'sbjs_current_add',
+                __('6 months', 'cookie-consent-cmp'),
+                __(
+                    'Stores additional current traffic source details for WooCommerce order attribution.',
+                    'cookie-consent-cmp'
+                )
+            ),
+            $this->buildCookieInfo(
+                'sbjs_first',
+                __('6 months', 'cookie-consent-cmp'),
+                __(
+                    'Stores the visitor’s first traffic source for WooCommerce order attribution.',
+                    'cookie-consent-cmp'
+                )
+            ),
+            $this->buildCookieInfo(
+                'sbjs_first_add',
+                __('6 months', 'cookie-consent-cmp'),
+                __(
+                    'Stores additional first traffic source details for WooCommerce order attribution.',
+                    'cookie-consent-cmp'
+                )
+            ),
+            $this->buildCookieInfo(
+                'sbjs_migrations',
+                __('6 months', 'cookie-consent-cmp'),
+                __('Tracks Sourcebuster cookie format migrations.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'sbjs_session',
+                __('30 minutes', 'cookie-consent-cmp'),
+                __('Stores the visitor’s current source attribution session.', 'cookie-consent-cmp')
+            ),
+            $this->buildCookieInfo(
+                'sbjs_udata',
+                __('6 months', 'cookie-consent-cmp'),
+                __(
+                    'Stores visitor user-agent and page attribution details for WooCommerce order reporting.',
+                    'cookie-consent-cmp'
+                )
+            ),
+        ];
     }
 
     /**

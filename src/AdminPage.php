@@ -181,8 +181,46 @@ final class AdminPage
             __('LinkedIn partner ID', 'cookie-consent-cmp'),
             self::INTEGRATIONS_SECTION
         );
+        $this->addPolylangField();
+        $this->addWooCommerceField();
         $this->addKlaviyoField();
         $this->addYouTubeField();
+    }
+
+    private function addPolylangField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-polylang',
+            __('Polylang disclosure', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_polylang',
+                'label' => __(
+                    'Show the Polylang language cookie for multilingual sites and WooCommerce shops.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
+    }
+
+    private function addWooCommerceField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-woocommerce',
+            __('WooCommerce disclosure', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_woocommerce',
+                'label' => __(
+                    'Show WooCommerce cart, checkout, session, and source attribution cookies.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
     }
 
     private function addKlaviyoField(): void
