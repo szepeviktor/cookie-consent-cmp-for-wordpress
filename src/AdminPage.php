@@ -181,7 +181,26 @@ final class AdminPage
             __('LinkedIn partner ID', 'cookie-consent-cmp'),
             self::INTEGRATIONS_SECTION
         );
+        $this->addKlaviyoField();
         $this->addYouTubeField();
+    }
+
+    private function addKlaviyoField(): void
+    {
+        add_settings_field(
+            'cookie-consent-cmp-enable-klaviyo',
+            __('Klaviyo disclosure', 'cookie-consent-cmp'),
+            [$this, 'renderCheckboxField'],
+            self::PAGE_SLUG,
+            self::INTEGRATIONS_SECTION,
+            [
+                'name' => 'enable_klaviyo',
+                'label' => __(
+                    'Show Klaviyo as a required marketing service when the Klaviyo WooCommerce plugin loads tracking outside CMP control.',
+                    'cookie-consent-cmp'
+                ),
+            ]
+        );
     }
 
     private function addYouTubeField(): void

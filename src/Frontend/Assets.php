@@ -310,6 +310,10 @@ final class Assets
             $services[] = $this->buildLinkedInService($lang);
         }
 
+        if ((bool) $options['enable_klaviyo']) {
+            $services[] = $this->buildKlaviyoService($lang);
+        }
+
         if ((bool) $options['enable_youtube']) {
             $services[] = $this->buildYouTubeService($lang);
         }
@@ -556,6 +560,42 @@ final class Assets
             __('Measures LinkedIn campaign performance and website conversions.', 'cookie-consent-cmp'),
             $lang
         );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildKlaviyoService(string $lang): array
+    {
+        return [
+            'name' => 'klaviyo',
+            'title' => __('Klaviyo', 'cookie-consent-cmp'),
+            'purposes' => ['marketing'],
+            'default' => true,
+            'required' => true,
+            'optOut' => false,
+            'onlyOnce' => true,
+            'cookies' => ['__kla_id'],
+            'wpConsentCookies' => [
+                $this->buildCookieInfo(
+                    '__kla_id',
+                    __('2 years', 'cookie-consent-cmp'),
+                    __(
+                        'Stores Klaviyo visitor identity for email marketing, attribution, and WooCommerce tracking.',
+                        'cookie-consent-cmp'
+                    )
+                ),
+            ],
+            'translations' => [
+                $lang => [
+                    'title' => __('Klaviyo', 'cookie-consent-cmp'),
+                    'description' => __(
+                        'Klaviyo tracking is loaded by the installed Klaviyo WooCommerce plugin and supports email marketing attribution, forms, and WooCommerce customer activity tracking.',
+                        'cookie-consent-cmp'
+                    ),
+                ],
+            ],
+        ];
     }
 
     /**
